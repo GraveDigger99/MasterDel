@@ -765,7 +765,7 @@ textarea.input {
   gap: 2rem;
   display: -ms-grid;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(144px, 1fr));
 }
 
 .navigation-block__link {
@@ -774,6 +774,9 @@ textarea.input {
   gap: 1rem;
   color: var(--Dark);
   text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   font-weight: 600;
   line-height: 1.4285714286;
 }
@@ -786,9 +789,6 @@ textarea.input {
 .navigation-block__image {
   overflow: hidden;
   border-radius: 0.25rem;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
 }
 
 .navigation-block__image img {
@@ -803,6 +803,8 @@ textarea.input {
      object-fit: cover;
   -o-object-position: center;
      object-position: center;
+  height: 11rem;
+  width: 11rem;
 }
 
 .calculator__container {
@@ -1119,11 +1121,6 @@ textarea.input {
     padding: 0 0.1875rem;
   }
 
-  .navigation-block__image img {
-    width: 11rem;
-    height: 11rem;
-  }
-
   .header {
     border-bottom: 0.0625rem solid var(--Light-grey);
   }
@@ -1323,7 +1320,7 @@ textarea.input {
   }
 
   .navigation-block__image img {
-    width: 100%;
+    max-height: 9rem;
   }
 
   .calculator__container {
@@ -1554,12 +1551,6 @@ textarea.input {
     -webkit-box-direction: reverse;
         -ms-flex-direction: column-reverse;
             flex-direction: column-reverse;
-  }
-}
-
-@media (max-width: 22.5em) {
-  .navigation-block__image img {
-    height: 200px;
   }
 }
 
