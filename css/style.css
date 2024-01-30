@@ -1010,6 +1010,16 @@ textarea.input {
   margin-bottom: 1rem;
 }
 
+.top-footer__logo img {
+  width: 10rem;
+  height: 2.5rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+  max-width: 100%;
+}
+
 .top-footer__descr {
   color: var(--Neutral-grey-violet);
   line-height: 1.4285714286;
