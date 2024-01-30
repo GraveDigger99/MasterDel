@@ -5,7 +5,7 @@
 	<title>Calculator-Gibs</title>
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="css/style.min.css?_v=20240131002830">
+	<link rel="stylesheet" href="css/style.min.css?_v=20240131022512">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -65,7 +65,7 @@
 						</ul>
 					</nav>
 					<div class="header-block">
-						<h1 class="header-block__title title">Калькулятор расчета обоев</h1>
+						<h1 class="header-block__title title">Калькулятор расчета гибсокартона</h1>
 						<p class="header-block__descr">
 							Чтобы узнать, сколько упаковок вам понадобится, укажите данные ниже.
 						</p>
@@ -77,137 +77,55 @@
 					<div class="calculator__body">
 						<div data-tabs class="tabs">
 							<nav data-tabs-titles class="tabs__navigation">
-								<button type="button" class="tabs__title _tab-active">По размеру комнаты</button>
-								<button type="button" class="tabs__title">По размеру комнаты</button>
+								<button type="button" class="tabs__title _tab-active">Перегородка</button>
+								<button type="button" class="tabs__title">Обшивка стен</button>
+								<button type="button" class="tabs__title">Монтаж потолка</button>
 							</nav>
 							<div data-tabs-body class="tabs__content">
-								<form action="#" class="tabs__body">
-									<div class="tabs__item">
-										<h2 class="tabs__subtitle subtitle">
-											Размер комнаты
-										</h2>
-										<div class="tabs__form form-tabs">
-											<div class="form-tabs__line">
-												<label class="form-tabs__label">Длина комнаты</label>
-												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">метры (м)</span>
-												</div>
-											</div>
-											<div class="form-tabs__line">
-												<label class="form-tabs__label">Ширина комнаты</label>
-												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">метры (м)</span>
-												</div>
-											</div>
-											<div class="form-tabs__line">
-												<label class="form-tabs__label">Высота комнаты</label>
-												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">метры (м)</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tabs__item">
-										<h2 class="tabs__subtitle subtitle">По размеру стены</h2>
-										<div class="tabs__form form-tabs">
-											<div class="form-tabs__line">
-												<label class="form-tabs__label">Длина стены</label>
-												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">метры (м)</span>
-												</div>
-											</div>
-											<div class="form-tabs__line">
-												<label class="form-tabs__label">Высота стены</label>
-												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">метры (м)</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tabs__item">
-										<h2 class="tabs__subtitle subtitle">Окна</h2>
-										<button class="tabs__add">
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-												<path fill-rule="evenodd" clip-rule="evenodd" d="M8 2C8.55228 2 9 2.44772 9 3V7H13C13.5523 7 14 7.44772 14 8C14 8.55228 13.5523 9 13 9H9V13C9 13.5523 8.55228 14 8 14C7.44772 14 7 13.5523 7 13V9H3C2.44772 9 2 8.55228 2 8C2 7.44772 2.44772 7 3 7H7V3C7 2.44772 7.44772 2 8 2Z" fill="#1A1A1A" />
-											</svg>
-											<span>добавить окно</span>
-										</button>
-									</div>
-									<div class="tabs__item">
-										<h2 class="tabs__subtitle subtitle">Двери</h2>
-										<div class="tabs__inner">
-											<div class="tabs__header">
-												<h3 class="tabs__topic">Двери #1</h3>
-												<button type="button" class="tabs__close">
-													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-														<path fill-rule="evenodd" clip-rule="evenodd" d="M9.41401 8.00001L12.707 4.70701C13.098 4.31601 13.098 3.68401 12.707 3.29301C12.316 2.90201 11.684 2.90201 11.293 3.29301L8.00001 6.58601L4.70701 3.29301C4.31601 2.90201 3.68401 2.90201 3.29301 3.29301C2.90201 3.68401 2.90201 4.31601 3.29301 4.70701L6.58601 8.00001L3.29301 11.293C2.90201 11.684 2.90201 12.316 3.29301 12.707C3.48801 12.902 3.74401 13 4.00001 13C4.25601 13 4.51201 12.902 4.70701 12.707L8.00001 9.41401L11.293 12.707C11.488 12.902 11.744 13 12 13C12.256 13 12.512 12.902 12.707 12.707C13.098 12.316 13.098 11.684 12.707 11.293L9.41401 8.00001Z" fill="#8B93A5" />
-													</svg>
-												</button>
-											</div>
-											<div class="tabs__form form-tabs">
-												<div class="form-tabs__line">
-													<label class="form-tabs__label">Ширина двери</label>
-													<div class="form-tabs__wrapper">
-														<input type="text" class="form-tabs__input input" placeholder="0.0">
-														<span class="form-tabs__measurement">сантиметры (см)</span>
-													</div>
-												</div>
-												<div class="form-tabs__line">
-													<label class="form-tabs__label">Высота двери</label>
-													<div class="form-tabs__wrapper">
-														<input type="text" class="form-tabs__input input" placeholder="0.0">
-														<span class="form-tabs__measurement">сантиметры (см)</span>
-													</div>
-												</div>
-											</div>
-										</div>
-										<button class="tabs__add">
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-												<path fill-rule="evenodd" clip-rule="evenodd" d="M8 2C8.55228 2 9 2.44772 9 3V7H13C13.5523 7 14 7.44772 14 8C14 8.55228 13.5523 9 13 9H9V13C9 13.5523 8.55228 14 8 14C7.44772 14 7 13.5523 7 13V9H3C2.44772 9 2 8.55228 2 8C2 7.44772 2.44772 7 3 7H7V3C7 2.44772 7.44772 2 8 2Z" fill="#1A1A1A" />
-											</svg>
-											<span>добавить окно</span>
-										</button>
-									</div>
-									<div class="tabs__item">
-										<h2 class="tabs__subtitle subtitle">
-											Размер обоев
-										</h2>
-										<div class="tabs__form form-tabs">
-											<div class="form-tabs__line">
-												<label class="form-tabs__label">Ширина рулона</label>
-												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">сантиметры (см)</span>
-												</div>
-											</div>
-											<div class="form-tabs__line">
-												<label class="form-tabs__label">Длина рулона</label>
-												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">метры (м)</span>
-												</div>
-											</div>
-											<div class="form-tabs__line">
-												<label class="form-tabs__label">Поворот рисунка</label>
-												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">сантиметры (см)</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									<button class="form-tabs__button">Рассчитать стоимость</button>
-								</form>
 								<div class="tabs__body">
-									Содержимое второго таба 22
+									<h2 class="tabs__subtitle subtitle">
+										Размер помещения
+									</h2>
+									<form action="#" class="tabs__form form-tabs">
+										<div class="form-tabs__line form-tabs__line_error">
+											<label for="input1" class="form-tabs__label">Ширина поверхности</label>
+											<div class="form-tabs__wrapper">
+												<input id="input1" type="number" class="form-tabs__input input" placeholder="0.0">
+												<span class="form-tabs__measurement">метры (м)</span>
+											</div>
+										</div>
+										<div class="form-tabs__line">
+											<label for="input2" class="form-tabs__label">Длина/высота поверхности</label>
+											<div class="form-tabs__wrapper">
+												<input id="input2" type="number" class="form-tabs__input input" placeholder="0.0">
+												<span class="form-tabs__measurement">метры (м)</span>
+											</div>
+										</div>
+										<div class="form-tabs__line">
+											<label for="input3" class="form-tabs__label">Ширина листа гибсокартона</label>
+											<div class="form-tabs__wrapper">
+												<input id="input3" type="number" class="form-tabs__input input" placeholder="0.0">
+												<span class="form-tabs__measurement">метры (м)</span>
+											</div>
+										</div>
+										<div class="form-tabs__line">
+											<label for="input4" class="form-tabs__label">Высота листа гибсокартона</label>
+											<div class="form-tabs__wrapper">
+												<input id="input4" type="number" class="form-tabs__input input" placeholder="0.0">
+												<span class="form-tabs__measurement">метры (м)</span>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="tabs__body">
+									Содержимое второго таба
+								</div>
+								<div class="tabs__body">
+									Содержимое третьего таба
 								</div>
 							</div>
 						</div>
+						<button class="form-tabs__button">Рассчитать стоимость</button>
 						<div class="calculator__content">
 							<h2 class="calculator__subtitle subtitle">
 								Расчет количества гибсокартона для
@@ -248,7 +166,7 @@
 							</div>
 						</div>
 					</div>
-					<aside class="calculator__result result">
+					<aside data-da=".calculator__body, 767.98, 2" class="calculator__result result">
 						<h4 class="result__header">Результаты</h4>
 						<div class="result__items">
 							<div class="result__item">
@@ -343,7 +261,7 @@
 		</div>
 	</div>
 </div> -->
-	<script src="js/app.min.js?_v=20240131002830"></script>
+	<script src="js/app.min.js?_v=20240131022512"></script>
 </body>
 
 </html>

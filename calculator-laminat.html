@@ -5,7 +5,7 @@
 	<title>Calculator-Laminat</title>
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="css/style.min.css?_v=20240131002830">
+	<link rel="stylesheet" href="css/style.min.css?_v=20240131022512">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -87,24 +87,24 @@
 											Размер помещения
 										</h2>
 										<div class="tabs__form form-tabs">
-											<div class="form-tabs__line">
-												<label class="form-tabs__label">Длина комнаты</label>
+											<div class="form-tabs__line form-tabs__line_error">
+												<label for="input1" class="form-tabs__label">Длина комнаты</label>
 												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
+													<input id="input1" type="number" class="form-tabs__input input" placeholder="0.0">
 													<span class="form-tabs__measurement">метры (м)</span>
 												</div>
 											</div>
 											<div class="form-tabs__line">
-												<label class="form-tabs__label">Ширина комнаты</label>
+												<label for="input2" class="form-tabs__label">Ширина комнаты</label>
 												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
+													<input id="input2" type="number" class="form-tabs__input input" placeholder="0.0">
 													<span class="form-tabs__measurement">метры (м)</span>
 												</div>
 											</div>
 											<div class="form-tabs__line">
-												<label class="form-tabs__label">Высота комнаты</label>
+												<label for="input3" class="form-tabs__label">Высота комнаты</label>
 												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
+													<input id="input3" type="number" class="form-tabs__input input" placeholder="0.0">
 													<span class="form-tabs__measurement">метры (м)</span>
 												</div>
 											</div>
@@ -116,30 +116,30 @@
 										</h2>
 										<div class="tabs__form form-tabs">
 											<div class="form-tabs__line">
-												<label class="form-tabs__label">Длина панели</label>
+												<label for="input4" class="form-tabs__label">Длина панели</label>
 												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
+													<input id="input4" type="number" class="form-tabs__input input" placeholder="0.0">
 													<span class="form-tabs__measurement">сантиметры (см)</span>
 												</div>
 											</div>
 											<div class="form-tabs__line">
-												<label class="form-tabs__label">Ширина панели</label>
+												<label for="input5" class="form-tabs__label">Ширина панели</label>
 												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
+													<input id="input5" type="number" class="form-tabs__input input" placeholder="0.0">
 													<span class="form-tabs__measurement">сантиметры (см)</span>
 												</div>
 											</div>
 											<div class="form-tabs__line">
-												<label class="form-tabs__label">Число панелей в упаковке</label>
+												<label for="input6" class="form-tabs__label">Число панелей в упаковке</label>
 												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
+													<input id="input6" type="number" class="form-tabs__input input" placeholder="0.0">
 													<span class="form-tabs__measurement">шт</span>
 												</div>
 											</div>
 											<div class="form-tabs__line">
-												<label class="form-tabs__label">Площадь упаковки</label>
+												<label for="input7" class="form-tabs__label">Площадь упаковки</label>
 												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
+													<input id="input7" type="number" class="form-tabs__input input" placeholder="0.0">
 													<span class="form-tabs__measurement">м2</span>
 												</div>
 											</div>
@@ -177,9 +177,9 @@
 										</h2>
 										<div class="tabs__form form-tabs">
 											<div class="form-tabs__line">
-												<label class="form-tabs__label">Минимальное значение 250 мм</label>
+												<label for="input8" class="form-tabs__label">Минимальное значение 250 мм</label>
 												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
+													<input id="input8" type="number" class="form-tabs__input input" placeholder="0.0">
 													<span class="form-tabs__measurement">миллиметры (мм)</span>
 												</div>
 											</div>
@@ -191,21 +191,21 @@
 										</h2>
 										<div class="tabs__form form-tabs">
 											<div class="form-tabs__line">
-												<label class="form-tabs__label">Рекомендуемое значение 6 - 8 мм</label>
+												<label for="input9" class="form-tabs__label">Рекомендуемое значение 6 - 8 мм</label>
 												<div class="form-tabs__wrapper">
-													<input type="text" class="form-tabs__input input" placeholder="0.0">
+													<input id="input9" type="number" class="form-tabs__input input" placeholder="0.0">
 													<span class="form-tabs__measurement">миллиметры (мм)</span>
 												</div>
 											</div>
 										</div>
 									</div>
-									<button class="form-tabs__button">Рассчитать стоимость</button>
 								</form>
 								<div class="tabs__body">
 									Содержимое второго таба 22
 								</div>
 							</div>
 						</div>
+						<button class="form-tabs__button">Рассчитать стоимость</button>
 						<div class="calculator__content">
 							<h2 class="calculator__subtitle subtitle">
 								Расчет количества гибсокартона для
@@ -246,7 +246,7 @@
 							</div>
 						</div>
 					</div>
-					<aside class="calculator__result result">
+					<aside data-da=".calculator__body, 767.98, 2" class="calculator__result result">
 						<h4 class="result__header">Результаты</h4>
 						<div class="result__items">
 							<div class="result__item">
@@ -341,7 +341,7 @@
 		</div>
 	</div>
 </div> -->
-	<script src="js/app.min.js?_v=20240131002830"></script>
+	<script src="js/app.min.js?_v=20240131022512"></script>
 </body>
 
 </html>

@@ -812,6 +812,11 @@
     }
     const da = new DynamicAdapt("max");
     da.init();
+    const tabsInner = document.querySelector(".tabs__inner");
+    const closeDoorBtn = document.querySelector(".tabs__close_door");
+    if (closeDoorBtn) closeDoorBtn.addEventListener("click", (() => {
+        tabsInner.style.display = "none";
+    }));
     window["FLS"] = false;
     isWebp();
     menuInit();
