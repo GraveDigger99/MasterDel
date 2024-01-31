@@ -942,6 +942,10 @@ textarea.input {
   line-height: 1.4285714286;
 }
 
+.tabs__add {
+  margin-top: 2rem;
+}
+
 .header {
   position: fixed;
   top: 0;
@@ -1485,6 +1489,10 @@ textarea.input {
 
   .calculator__info p {
     font-size: 0.75rem;
+  }
+
+  .tabs__add {
+    margin-top: 1.5rem;
   }
 
   .header__container {

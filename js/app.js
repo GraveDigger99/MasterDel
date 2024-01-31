@@ -812,11 +812,79 @@
     }
     const da = new DynamicAdapt("max");
     da.init();
-    const tabsInner = document.querySelector(".tabs__inner");
-    const closeDoorBtn = document.querySelector(".tabs__close_door");
-    if (closeDoorBtn) closeDoorBtn.addEventListener("click", (() => {
-        tabsInner.style.display = "none";
+    const blockCounters = {};
+    document.getElementById("doorsWrapperButton").addEventListener("click", (function(event) {
+        event.preventDefault();
+        addBlock("doors", "doorsWrapper");
     }));
+    document.getElementById("windowsWrapperButton").addEventListener("click", (function(event) {
+        event.preventDefault();
+        addBlock("windows", "windowsWrapper");
+    }));
+    document.getElementById("bathroomWrapperButton").addEventListener("click", (function(event) {
+        event.preventDefault();
+        addBlock("bathroom", "bathroomWrapper");
+    }));
+    function addBlock(blockType, wrapperId) {
+        if (!blockCounters[wrapperId]) blockCounters[wrapperId] = {};
+        const blockId = `${blockType}Block_${Date.now()}`;
+        const translatedBlockType = getBlockTypeLabel(blockType);
+        const blockCounter = getBlockCounter(blockType, wrapperId);
+        const newBlock = `\n    <div class="tabs__inner tabs__inner_${blockType}" id="${blockId}">\n      <div class="tabs__header">\n        <h3 data-row class="tabs__topic">${getTopicLabel(translatedBlockType)} #${blockCounter}</h3>\n        <button type="button" class="tabs__close tabs__close_${blockType}" id="${blockId}_closeBtn">\n          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">\n            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.41401 8.00001L12.707 4.70701C13.098 4.31601 13.098 3.68401 12.707 3.29301C12.316 2.90201 11.684 2.90201 11.293 3.29301L8.00001 6.58601L4.70701 3.29301C4.31601 2.90201 3.68401 2.90201 3.29301 3.29301C2.90201 3.68401 2.90201 4.31601 3.29301 4.70701L6.58601 8.00001L3.29301 11.293C2.90201 11.684 2.90201 12.316 3.29301 12.707C3.48801 12.902 3.74401 13 4.00001 13C4.25601 13 4.51201 12.902 4.70701 12.707L8.00001 9.41401L11.293 12.707C11.488 12.902 11.744 13 12 13C12.256 13 12.512 12.902 12.707 12.707C13.098 12.316 13.098 11.684 12.707 11.293L9.41401 8.00001Z" fill="#8B93A5"/>\n          </svg>\n        </button>\n      </div>\n      <div class="tabs__form form-tabs">\n        <div class="form-tabs__line">\n          <label for="${blockId}_input4" class="form-tabs__label">Ширина ${translatedBlockType}</label>\n          <div class="form-tabs__wrapper">\n            <input id="${blockId}_input4" type="number" class="form-tabs__input input" placeholder="0.0">\n            <span class="form-tabs__measurement">сантиметры (см)</span>\n          </div>\n        </div>\n        <div class="form-tabs__line">\n          <label for="${blockId}_input5" class="form-tabs__label">Высота ${translatedBlockType}</label>\n          <div class="form-tabs__wrapper">\n            <input id="${blockId}_input5" type="number" class="form-tabs__input input" placeholder="0.0">\n            <span class="form-tabs__measurement">сантиметры (см)</span>\n          </div>\n        </div>\n      </div>\n    </div>\n  `;
+        blockCounters[wrapperId][blockType] = (blockCounters[wrapperId][blockType] || 0) + 1;
+        const blockWrapper = document.getElementById(wrapperId);
+        blockWrapper.insertAdjacentHTML("beforeend", newBlock);
+        const closeBtn = document.getElementById(`${blockId}_closeBtn`);
+        closeBtn.addEventListener("click", (function() {
+            removeBlock(blockType, blockId, wrapperId);
+        }));
+        updateSerialNumbers(blockType, wrapperId);
+    }
+    function getBlockTypeLabel(blockType) {
+        switch (blockType) {
+          case "doors":
+            return "двери";
+
+          case "windows":
+            return "окна";
+
+          case "bathroom":
+            return "Ванны";
+
+          default:
+            return "";
+        }
+    }
+    function getTopicLabel(translatedBlockType) {
+        switch (translatedBlockType) {
+          case "двери":
+            return "Двери";
+
+          case "окна":
+            return "Окна";
+
+          case "bathroom":
+            return "1";
+
+          default:
+            return translatedBlockType;
+        }
+    }
+    function removeBlock(blockType, blockId, wrapperId) {
+        const block = document.getElementById(blockId);
+        block.parentNode.removeChild(block);
+        updateSerialNumbers(blockType, wrapperId);
+    }
+    function updateSerialNumbers(blockType, wrapperId) {
+        const blocks = document.querySelectorAll(`#${wrapperId} .tabs__inner_${blockType}`);
+        blocks.forEach(((block, index) => {
+            const topic = block.querySelector(".tabs__topic");
+            topic.textContent = `${getTopicLabel(getBlockTypeLabel(blockType))} #${index + 1}`;
+        }));
+    }
+    function getBlockCounter(blockType, wrapperId) {
+        return blockCounters[wrapperId][blockType] || 0;
+    }
     window["FLS"] = false;
     isWebp();
     menuInit();
