@@ -813,15 +813,15 @@
     const da = new DynamicAdapt("max");
     da.init();
     const blockCounters = {};
-    document.getElementById("doorsWrapperButton").addEventListener("click", (function(event) {
+    document.getElementById("doorsWrapperButton")?.addEventListener("click", (function(event) {
         event.preventDefault();
         addBlock("doors", "doorsWrapper");
     }));
-    document.getElementById("windowsWrapperButton").addEventListener("click", (function(event) {
+    document.getElementById("windowsWrapperButton")?.addEventListener("click", (function(event) {
         event.preventDefault();
         addBlock("windows", "windowsWrapper");
     }));
-    document.getElementById("bathroomWrapperButton").addEventListener("click", (function(event) {
+    document.getElementById("bathroomWrapperButton")?.addEventListener("click", (function(event) {
         event.preventDefault();
         addBlock("bathroom", "bathroomWrapper");
     }));
