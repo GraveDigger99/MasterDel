@@ -5,7 +5,7 @@
 	<title>Calculator-Kraska</title>
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="css/style.min.css?_v=20240131231752">
+	<link rel="stylesheet" href="css/style.min.css?_v=20240218164927">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -78,7 +78,6 @@
 						<div data-tabs class="tabs">
 							<nav data-tabs-titles class="tabs__navigation">
 								<button type="button" class="tabs__title _tab-active">Длина и ширина</button>
-								<button type="button" class="tabs__title">Площадь для покраски</button>
 							</nav>
 							<div data-tabs-body class="tabs__content">
 								<form action="#" class="tabs__body">
@@ -86,19 +85,25 @@
 										<h2 class="tabs__subtitle subtitle">
 											Размеры
 										</h2>
-										<div class="tabs__form form-tabs">
-											<div class="form-tabs__line form-tabs__line_error">
+										<div class="tabs__form form-tabs form-tabs_paint">
+											<div class="form-tabs__line">
 												<label for="input1" class="form-tabs__label">Ширина поверхности</label>
 												<div class="form-tabs__wrapper">
-													<input id="input1" type="number" class="form-tabs__input input" placeholder="0.0">
+													<input id="input1" type="text" class="form-tabs__input input input_width-surface  input_number" placeholder="0">
 													<span class="form-tabs__measurement">метры (м)</span>
 												</div>
 											</div>
 											<div class="form-tabs__line">
 												<label for="input2" class="form-tabs__label">Длина поверхности</label>
 												<div class="form-tabs__wrapper">
-													<input id="input2" type="number" class="form-tabs__input input" placeholder="0.0">
+													<input id="input2" type="text" class="form-tabs__input input input_surface-length  input_number" placeholder="0">
 													<span class="form-tabs__measurement">метры (м)</span>
+												</div>
+											</div>
+											<div class="form-tabs__line">
+												<label for="input3" class="form-tabs__label">Количество слоев</label>
+												<div class="form-tabs__wrapper">
+													<input id="input3" type="text" class="form-tabs__input input input_surface-layers  input_number" placeholder="0">
 												</div>
 											</div>
 										</div>
@@ -108,23 +113,18 @@
 											<h2 class="tabs__subtitle subtitle">
 												Тип поверхности
 											</h2>
-
 											<div class="options">
 												<div class="options__item">
-													<input hidden id="o_10" class="options__input" checked type="radio" value="1" name="option">
-													<label for="o_10" class="options__label"><span class="options__text">Дерево</span></label>
+													<input hidden id="b_101" class="options__input options__input_type" checked type="radio" value="0.9" name="option-type">
+													<label for="b_101" class="options__label"><span class="options__text">Дерево</span></label>
 												</div>
 												<div class="options__item">
-													<input hidden id="o_12" class="options__input" type="radio" value="2" name="option">
-													<label for="o_12" class="options__label"><span class="options__text">Металл</span></label>
+													<input hidden id="b_121" class="options__input options__input_type" type="radio" value="0.8" name="option-type">
+													<label for="b_121" class="options__label"><span class="options__text">Металл</span></label>
 												</div>
 												<div class="options__item">
-													<input hidden id="o_13" class="options__input" type="radio" value="3" name="option">
-													<label for="o_13" class="options__label"><span class="options__text">Штукатурка</span></label>
-												</div>
-												<div class="options__item">
-													<input hidden id="o_14" class="options__input" type="radio" value="4" name="option">
-													<label for="o_14" class="options__label"><span class="options__text">Другое</span></label>
+													<input hidden id="b_131" class="options__input options__input_type" type="radio" value="1" name="option-type">
+													<label for="b_131" class="options__label"><span class="options__text">Штукатурка / шпатлевка</span></label>
 												</div>
 											</div>
 										</div>
@@ -134,61 +134,42 @@
 											<h2 class="tabs__subtitle subtitle">
 												Тип краски
 											</h2>
-
 											<div class="options">
 												<div class="options__item">
-													<input hidden id="o_110" class="options__input" checked type="radio" value="1" name="option">
+													<input hidden id="o_110" class="options__input options__input_paintType" checked type="radio" value="0.25" name="option-paintType">
 													<label for="o_110" class="options__label"><span class="options__text">Акриловая</span></label>
 												</div>
 												<div class="options__item">
-													<input hidden id="o_112" class="options__input" type="radio" value="2" name="option">
-													<label for="o_112" class="options__label"><span class="options__text">Силиконовая</span></label>
+													<input hidden id="o_112" class="options__input options__input_paintType" type="radio" value="0.6" name="option-paintType">
+													<label for="o_112" class="options__label"><span class="options__text">Латексная</span></label>
 												</div>
 												<div class="options__item">
-													<input hidden id="o_113" class="options__input" type="radio" value="3" name="option">
-													<label for="o_113" class="options__label"><span class="options__text">Штукатурка</span></label>
+													<input hidden id="o_113" class="options__input options__input_paintType" type="radio" value="0.2" name="option-paintType">
+													<label for="o_113" class="options__label"><span class="options__text">Масляная</span></label>
 												</div>
 												<div class="options__item">
-													<input hidden id="o_114" class="options__input" type="radio" value="4" name="option">
-													<label for="o_114" class="options__label"><span class="options__text">Другое</span></label>
+													<input hidden id="o_114" class="options__input options__input_paintType" type="radio" value="0.55" name="option-paintType">
+													<label for="o_114" class="options__label"><span class="options__text">Поливинилацетатная (ПВА)</span></label>
+												</div>
+												<div class="options__item">
+													<input hidden id="o_115" class="options__input options__input_paintType" type="radio" value="0.3" name="option-paintType">
+													<label for="o_115" class="options__label"><span class="options__text">Силиконовая</span></label>
+												</div>
+												<div class="options__item">
+													<input hidden id="o_116" class="options__input options__input_paintType" type="radio" value="0.4" name="option-paintType">
+													<label for="o_116" class="options__label"><span class="options__text">Силикатная</span></label>
+												</div>
+												<div class="options__item">
+													<input hidden id="o_117" class="options__input options__input_paintType" type="radio" value="0.15" name="option-paintType">
+													<label for="o_117" class="options__label"><span class="options__text">Эмаль</span></label>
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="tabs__item">
-										<div class="checkbox">
-											<input id="c_1" class="checkbox__input" type="checkbox" value="1" name="form[]">
-											<label for="c_1" class="checkbox__label"><span class="checkbox__text">Дополнительная
-													поверхность</span></label>
-										</div>
-										<div class="tabs__form form-tabs form-tabs_with-chk">
-											<div class="form-tabs__line">
-												<label for="input3" class="form-tabs__label">Ширина поверхности</label>
-												<div class="form-tabs__wrapper">
-													<input id="input3" type="number" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">метры (м)</span>
-												</div>
-											</div>
-											<div class="form-tabs__line">
-												<label for="input4" class="form-tabs__label">Длина поверхности</label>
-												<div class="form-tabs__wrapper">
-													<input id="input4" type="number" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">метры (м)</span>
-												</div>
-											</div>
-										</div>
-										<div class="checkbox">
-											<input id="c_2" class="checkbox__input" type="checkbox" value="1" name="form[]">
-											<label for="c_2" class="checkbox__label"><span class="checkbox__text">Исключить поверхность</span></label>
-										</div>
-									</div>
+									<button class="form-tabs__button calculator-paint">Рассчитать стоимость</button>
 								</form>
-								<div class="tabs__body">
-									Содержимое второго таба 22
-								</div>
 							</div>
 						</div>
-						<button class="form-tabs__button">Рассчитать стоимость</button>
 						<div class="calculator__content">
 							<h2 class="calculator__subtitle subtitle">
 								Расчет количества гибсокартона для
@@ -229,39 +210,23 @@
 							</div>
 						</div>
 					</div>
-					<aside data-da=".calculator__body, 767.98, 2" class="calculator__result result">
-						<h4 class="result__header">Результаты</h4>
-						<div class="result__items">
-							<div class="result__item">
-								<div class="result__label">Количество листов (шт)</div>
-								<div class="result__value">120 шт</div>
+					<div class="pin-wrapper">
+						<aside data-da=".calculator__body, 767.98, 2" class="calculator__result result pin-block">
+							<div class="result__body">
+								<h4 class="result__header">Результаты</h4>
+								<div class="result__items">
+
+								</div>
 							</div>
-							<div class="result__item">
-								<div class="result__label">Стоимость площади</div>
-								<div class="result__value">12 000₽</div>
+							<div class="result__default">
+								<div class="result__image">
+									<img src="img/default-result/icon.svg" alt="icon">
+								</div>
+								<div class="result__topic">Заполните поля и нажмите «рассчитать»
+									что бы увидеть результаты.</div>
 							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь укладки</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь двери</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь ванны</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь экрана</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-						</div>
-						<div class="result__bottom">
-							<div class="result__label">Стоимость площади</div>
-							<div class="result__total-price">12 000₽</div>
-						</div>
-					</aside>
+						</aside>
+					</div>
 				</div>
 			</section>
 		</main>
@@ -324,7 +289,7 @@
 		</div>
 	</div>
 </div> -->
-	<script src="js/app.min.js?_v=20240131231752"></script>
+	<script src="js/app.min.js?_v=20240218164927"></script>
 </body>
 
 </html>

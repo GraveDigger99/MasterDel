@@ -87,9 +87,6 @@
             }), duration);
         }
     };
-    let _slideToggle = (target, duration = 500) => {
-        if (target.hidden) return _slideDown(target, duration); else return _slideUp(target, duration);
-    };
     let bodyLockStatus = true;
     let bodyLockToggle = (delay = 500) => {
         if (document.documentElement.classList.contains("lock")) bodyUnlock(delay); else bodyLock(delay);
@@ -232,11 +229,6 @@
                 document.documentElement.classList.toggle("menu-open");
             }
         }));
-    }
-    function functions_FLS(message) {
-        setTimeout((() => {
-            if (window.FLS) console.log(message);
-        }), 0);
     }
     function uniqArray(array) {
         return array.filter((function(item, index, self) {
@@ -405,320 +397,6 @@
             return !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/.test(formRequiredItem.value);
         }
     };
-    class SelectConstructor {
-        constructor(props, data = null) {
-            let defaultConfig = {
-                init: true,
-                logging: true
-            };
-            this.config = Object.assign(defaultConfig, props);
-            this.selectClasses = {
-                classSelect: "select",
-                classSelectBody: "select__body",
-                classSelectTitle: "select__title",
-                classSelectValue: "select__value",
-                classSelectLabel: "select__label",
-                classSelectInput: "select__input",
-                classSelectText: "select__text",
-                classSelectLink: "select__link",
-                classSelectOptions: "select__options",
-                classSelectOptionsScroll: "select__scroll",
-                classSelectOption: "select__option",
-                classSelectContent: "select__content",
-                classSelectRow: "select__row",
-                classSelectData: "select__asset",
-                classSelectDisabled: "_select-disabled",
-                classSelectTag: "_select-tag",
-                classSelectOpen: "_select-open",
-                classSelectActive: "_select-active",
-                classSelectFocus: "_select-focus",
-                classSelectMultiple: "_select-multiple",
-                classSelectCheckBox: "_select-checkbox",
-                classSelectOptionSelected: "_select-selected",
-                classSelectPseudoLabel: "_select-pseudo-label"
-            };
-            this._this = this;
-            if (this.config.init) {
-                const selectItems = data ? document.querySelectorAll(data) : document.querySelectorAll("select");
-                if (selectItems.length) {
-                    this.selectsInit(selectItems);
-                    this.setLogging(`Проснулся, построил селектов: (${selectItems.length})`);
-                } else this.setLogging("Сплю, нет ни одного select zzZZZzZZz");
-            }
-        }
-        getSelectClass(className) {
-            return `.${className}`;
-        }
-        getSelectElement(selectItem, className) {
-            return {
-                originalSelect: selectItem.querySelector("select"),
-                selectElement: selectItem.querySelector(this.getSelectClass(className))
-            };
-        }
-        selectsInit(selectItems) {
-            selectItems.forEach(((originalSelect, index) => {
-                this.selectInit(originalSelect, index + 1);
-            }));
-            document.addEventListener("click", function(e) {
-                this.selectsActions(e);
-            }.bind(this));
-            document.addEventListener("keydown", function(e) {
-                this.selectsActions(e);
-            }.bind(this));
-            document.addEventListener("focusin", function(e) {
-                this.selectsActions(e);
-            }.bind(this));
-            document.addEventListener("focusout", function(e) {
-                this.selectsActions(e);
-            }.bind(this));
-        }
-        selectInit(originalSelect, index) {
-            const _this = this;
-            let selectItem = document.createElement("div");
-            selectItem.classList.add(this.selectClasses.classSelect);
-            originalSelect.parentNode.insertBefore(selectItem, originalSelect);
-            selectItem.appendChild(originalSelect);
-            originalSelect.hidden = true;
-            index ? originalSelect.dataset.id = index : null;
-            if (this.getSelectPlaceholder(originalSelect)) {
-                originalSelect.dataset.placeholder = this.getSelectPlaceholder(originalSelect).value;
-                if (this.getSelectPlaceholder(originalSelect).label.show) {
-                    const selectItemTitle = this.getSelectElement(selectItem, this.selectClasses.classSelectTitle).selectElement;
-                    selectItemTitle.insertAdjacentHTML("afterbegin", `<span class="${this.selectClasses.classSelectLabel}">${this.getSelectPlaceholder(originalSelect).label.text ? this.getSelectPlaceholder(originalSelect).label.text : this.getSelectPlaceholder(originalSelect).value}</span>`);
-                }
-            }
-            selectItem.insertAdjacentHTML("beforeend", `<div class="${this.selectClasses.classSelectBody}"><div hidden class="${this.selectClasses.classSelectOptions}"></div></div>`);
-            this.selectBuild(originalSelect);
-            originalSelect.dataset.speed = originalSelect.dataset.speed ? originalSelect.dataset.speed : "150";
-            originalSelect.addEventListener("change", (function(e) {
-                _this.selectChange(e);
-            }));
-        }
-        selectBuild(originalSelect) {
-            const selectItem = originalSelect.parentElement;
-            selectItem.dataset.id = originalSelect.dataset.id;
-            originalSelect.dataset.classModif ? selectItem.classList.add(`select_${originalSelect.dataset.classModif}`) : null;
-            originalSelect.multiple ? selectItem.classList.add(this.selectClasses.classSelectMultiple) : selectItem.classList.remove(this.selectClasses.classSelectMultiple);
-            originalSelect.hasAttribute("data-checkbox") && originalSelect.multiple ? selectItem.classList.add(this.selectClasses.classSelectCheckBox) : selectItem.classList.remove(this.selectClasses.classSelectCheckBox);
-            this.setSelectTitleValue(selectItem, originalSelect);
-            this.setOptions(selectItem, originalSelect);
-            originalSelect.hasAttribute("data-search") ? this.searchActions(selectItem) : null;
-            originalSelect.hasAttribute("data-open") ? this.selectAction(selectItem) : null;
-            this.selectDisabled(selectItem, originalSelect);
-        }
-        selectsActions(e) {
-            const targetElement = e.target;
-            const targetType = e.type;
-            if (targetElement.closest(this.getSelectClass(this.selectClasses.classSelect)) || targetElement.closest(this.getSelectClass(this.selectClasses.classSelectTag))) {
-                const selectItem = targetElement.closest(".select") ? targetElement.closest(".select") : document.querySelector(`.${this.selectClasses.classSelect}[data-id="${targetElement.closest(this.getSelectClass(this.selectClasses.classSelectTag)).dataset.selectId}"]`);
-                const originalSelect = this.getSelectElement(selectItem).originalSelect;
-                if (targetType === "click") {
-                    if (!originalSelect.disabled) if (targetElement.closest(this.getSelectClass(this.selectClasses.classSelectTag))) {
-                        const targetTag = targetElement.closest(this.getSelectClass(this.selectClasses.classSelectTag));
-                        const optionItem = document.querySelector(`.${this.selectClasses.classSelect}[data-id="${targetTag.dataset.selectId}"] .select__option[data-value="${targetTag.dataset.value}"]`);
-                        this.optionAction(selectItem, originalSelect, optionItem);
-                    } else if (targetElement.closest(this.getSelectClass(this.selectClasses.classSelectTitle))) this.selectAction(selectItem); else if (targetElement.closest(this.getSelectClass(this.selectClasses.classSelectOption))) {
-                        const optionItem = targetElement.closest(this.getSelectClass(this.selectClasses.classSelectOption));
-                        this.optionAction(selectItem, originalSelect, optionItem);
-                    }
-                } else if (targetType === "focusin" || targetType === "focusout") {
-                    if (targetElement.closest(this.getSelectClass(this.selectClasses.classSelect))) targetType === "focusin" ? selectItem.classList.add(this.selectClasses.classSelectFocus) : selectItem.classList.remove(this.selectClasses.classSelectFocus);
-                } else if (targetType === "keydown" && e.code === "Escape") this.selectsСlose();
-            } else this.selectsСlose();
-        }
-        selectsСlose(selectOneGroup) {
-            const selectsGroup = selectOneGroup ? selectOneGroup : document;
-            const selectActiveItems = selectsGroup.querySelectorAll(`${this.getSelectClass(this.selectClasses.classSelect)}${this.getSelectClass(this.selectClasses.classSelectOpen)}`);
-            if (selectActiveItems.length) selectActiveItems.forEach((selectActiveItem => {
-                this.selectСlose(selectActiveItem);
-            }));
-        }
-        selectСlose(selectItem) {
-            const originalSelect = this.getSelectElement(selectItem).originalSelect;
-            const selectOptions = this.getSelectElement(selectItem, this.selectClasses.classSelectOptions).selectElement;
-            if (!selectOptions.classList.contains("_slide")) {
-                selectItem.classList.remove(this.selectClasses.classSelectOpen);
-                _slideUp(selectOptions, originalSelect.dataset.speed);
-            }
-        }
-        selectAction(selectItem) {
-            const originalSelect = this.getSelectElement(selectItem).originalSelect;
-            const selectOptions = this.getSelectElement(selectItem, this.selectClasses.classSelectOptions).selectElement;
-            if (originalSelect.closest("[data-one-select]")) {
-                const selectOneGroup = originalSelect.closest("[data-one-select]");
-                this.selectsСlose(selectOneGroup);
-            }
-            if (!selectOptions.classList.contains("_slide")) {
-                selectItem.classList.toggle(this.selectClasses.classSelectOpen);
-                _slideToggle(selectOptions, originalSelect.dataset.speed);
-            }
-        }
-        setSelectTitleValue(selectItem, originalSelect) {
-            const selectItemBody = this.getSelectElement(selectItem, this.selectClasses.classSelectBody).selectElement;
-            const selectItemTitle = this.getSelectElement(selectItem, this.selectClasses.classSelectTitle).selectElement;
-            if (selectItemTitle) selectItemTitle.remove();
-            selectItemBody.insertAdjacentHTML("afterbegin", this.getSelectTitleValue(selectItem, originalSelect));
-        }
-        getSelectTitleValue(selectItem, originalSelect) {
-            let selectTitleValue = this.getSelectedOptionsData(originalSelect, 2).html;
-            if (originalSelect.multiple && originalSelect.hasAttribute("data-tags")) {
-                selectTitleValue = this.getSelectedOptionsData(originalSelect).elements.map((option => `<span role="button" data-select-id="${selectItem.dataset.id}" data-value="${option.value}" class="_select-tag">${this.getSelectElementContent(option)}</span>`)).join("");
-                if (originalSelect.dataset.tags && document.querySelector(originalSelect.dataset.tags)) {
-                    document.querySelector(originalSelect.dataset.tags).innerHTML = selectTitleValue;
-                    if (originalSelect.hasAttribute("data-search")) selectTitleValue = false;
-                }
-            }
-            selectTitleValue = selectTitleValue.length ? selectTitleValue : originalSelect.dataset.placeholder ? originalSelect.dataset.placeholder : "";
-            let pseudoAttribute = "";
-            let pseudoAttributeClass = "";
-            if (originalSelect.hasAttribute("data-pseudo-label")) {
-                pseudoAttribute = originalSelect.dataset.pseudoLabel ? ` data-pseudo-label="${originalSelect.dataset.pseudoLabel}"` : ` data-pseudo-label="Заполните атрибут"`;
-                pseudoAttributeClass = ` ${this.selectClasses.classSelectPseudoLabel}`;
-            }
-            this.getSelectedOptionsData(originalSelect).values.length ? selectItem.classList.add(this.selectClasses.classSelectActive) : selectItem.classList.remove(this.selectClasses.classSelectActive);
-            if (originalSelect.hasAttribute("data-search")) return `<div class="${this.selectClasses.classSelectTitle}"><span${pseudoAttribute} class="${this.selectClasses.classSelectValue}"><input autocomplete="off" type="text" placeholder="${selectTitleValue}" data-placeholder="${selectTitleValue}" class="${this.selectClasses.classSelectInput}"></span></div>`; else {
-                const customClass = this.getSelectedOptionsData(originalSelect).elements.length && this.getSelectedOptionsData(originalSelect).elements[0].dataset.class ? ` ${this.getSelectedOptionsData(originalSelect).elements[0].dataset.class}` : "";
-                return `<button type="button" class="${this.selectClasses.classSelectTitle}"><span${pseudoAttribute} class="${this.selectClasses.classSelectValue}${pseudoAttributeClass}"><span class="${this.selectClasses.classSelectContent}${customClass}">${selectTitleValue}</span></span></button>`;
-            }
-        }
-        getSelectElementContent(selectOption) {
-            const selectOptionData = selectOption.dataset.asset ? `${selectOption.dataset.asset}` : "";
-            const selectOptionDataHTML = selectOptionData.indexOf("img") >= 0 ? `<img src="${selectOptionData}" alt="">` : selectOptionData;
-            let selectOptionContentHTML = ``;
-            selectOptionContentHTML += selectOptionData ? `<span class="${this.selectClasses.classSelectRow}">` : "";
-            selectOptionContentHTML += selectOptionData ? `<span class="${this.selectClasses.classSelectData}">` : "";
-            selectOptionContentHTML += selectOptionData ? selectOptionDataHTML : "";
-            selectOptionContentHTML += selectOptionData ? `</span>` : "";
-            selectOptionContentHTML += selectOptionData ? `<span class="${this.selectClasses.classSelectText}">` : "";
-            selectOptionContentHTML += selectOption.textContent;
-            selectOptionContentHTML += selectOptionData ? `</span>` : "";
-            selectOptionContentHTML += selectOptionData ? `</span>` : "";
-            return selectOptionContentHTML;
-        }
-        getSelectPlaceholder(originalSelect) {
-            const selectPlaceholder = Array.from(originalSelect.options).find((option => !option.value));
-            if (selectPlaceholder) return {
-                value: selectPlaceholder.textContent,
-                show: selectPlaceholder.hasAttribute("data-show"),
-                label: {
-                    show: selectPlaceholder.hasAttribute("data-label"),
-                    text: selectPlaceholder.dataset.label
-                }
-            };
-        }
-        getSelectedOptionsData(originalSelect, type) {
-            let selectedOptions = [];
-            if (originalSelect.multiple) selectedOptions = Array.from(originalSelect.options).filter((option => option.value)).filter((option => option.selected)); else selectedOptions.push(originalSelect.options[originalSelect.selectedIndex]);
-            return {
-                elements: selectedOptions.map((option => option)),
-                values: selectedOptions.filter((option => option.value)).map((option => option.value)),
-                html: selectedOptions.map((option => this.getSelectElementContent(option)))
-            };
-        }
-        getOptions(originalSelect) {
-            let selectOptionsScroll = originalSelect.hasAttribute("data-scroll") ? `data-simplebar` : "";
-            let selectOptionsScrollHeight = originalSelect.dataset.scroll ? `style="max-height:${originalSelect.dataset.scroll}px"` : "";
-            let selectOptions = Array.from(originalSelect.options);
-            if (selectOptions.length > 0) {
-                let selectOptionsHTML = ``;
-                if (this.getSelectPlaceholder(originalSelect) && !this.getSelectPlaceholder(originalSelect).show || originalSelect.multiple) selectOptions = selectOptions.filter((option => option.value));
-                selectOptionsHTML += selectOptionsScroll ? `<div ${selectOptionsScroll} ${selectOptionsScrollHeight} class="${this.selectClasses.classSelectOptionsScroll}">` : "";
-                selectOptions.forEach((selectOption => {
-                    selectOptionsHTML += this.getOption(selectOption, originalSelect);
-                }));
-                selectOptionsHTML += selectOptionsScroll ? `</div>` : "";
-                return selectOptionsHTML;
-            }
-        }
-        getOption(selectOption, originalSelect) {
-            const selectOptionSelected = selectOption.selected && originalSelect.multiple ? ` ${this.selectClasses.classSelectOptionSelected}` : "";
-            const selectOptionHide = selectOption.selected && !originalSelect.hasAttribute("data-show-selected") && !originalSelect.multiple ? `hidden` : ``;
-            const selectOptionClass = selectOption.dataset.class ? ` ${selectOption.dataset.class}` : "";
-            const selectOptionLink = selectOption.dataset.href ? selectOption.dataset.href : false;
-            const selectOptionLinkTarget = selectOption.hasAttribute("data-href-blank") ? `target="_blank"` : "";
-            let selectOptionHTML = ``;
-            selectOptionHTML += selectOptionLink ? `<a ${selectOptionLinkTarget} ${selectOptionHide} href="${selectOptionLink}" data-value="${selectOption.value}" class="${this.selectClasses.classSelectOption}${selectOptionClass}${selectOptionSelected}">` : `<button ${selectOptionHide} class="${this.selectClasses.classSelectOption}${selectOptionClass}${selectOptionSelected}" data-value="${selectOption.value}" type="button">`;
-            selectOptionHTML += this.getSelectElementContent(selectOption);
-            selectOptionHTML += selectOptionLink ? `</a>` : `</button>`;
-            return selectOptionHTML;
-        }
-        setOptions(selectItem, originalSelect) {
-            const selectItemOptions = this.getSelectElement(selectItem, this.selectClasses.classSelectOptions).selectElement;
-            selectItemOptions.innerHTML = this.getOptions(originalSelect);
-        }
-        optionAction(selectItem, originalSelect, optionItem) {
-            if (originalSelect.multiple) {
-                optionItem.classList.toggle(this.selectClasses.classSelectOptionSelected);
-                const originalSelectSelectedItems = this.getSelectedOptionsData(originalSelect).elements;
-                originalSelectSelectedItems.forEach((originalSelectSelectedItem => {
-                    originalSelectSelectedItem.removeAttribute("selected");
-                }));
-                const selectSelectedItems = selectItem.querySelectorAll(this.getSelectClass(this.selectClasses.classSelectOptionSelected));
-                selectSelectedItems.forEach((selectSelectedItems => {
-                    originalSelect.querySelector(`option[value="${selectSelectedItems.dataset.value}"]`).setAttribute("selected", "selected");
-                }));
-            } else {
-                if (!originalSelect.hasAttribute("data-show-selected")) {
-                    if (selectItem.querySelector(`${this.getSelectClass(this.selectClasses.classSelectOption)}[hidden]`)) selectItem.querySelector(`${this.getSelectClass(this.selectClasses.classSelectOption)}[hidden]`).hidden = false;
-                    optionItem.hidden = true;
-                }
-                originalSelect.value = optionItem.hasAttribute("data-value") ? optionItem.dataset.value : optionItem.textContent;
-                this.selectAction(selectItem);
-            }
-            this.setSelectTitleValue(selectItem, originalSelect);
-            this.setSelectChange(originalSelect);
-        }
-        selectChange(e) {
-            const originalSelect = e.target;
-            this.selectBuild(originalSelect);
-            this.setSelectChange(originalSelect);
-        }
-        setSelectChange(originalSelect) {
-            if (originalSelect.hasAttribute("data-validate")) formValidate.validateInput(originalSelect);
-            if (originalSelect.hasAttribute("data-submit") && originalSelect.value) {
-                let tempButton = document.createElement("button");
-                tempButton.type = "submit";
-                originalSelect.closest("form").append(tempButton);
-                tempButton.click();
-                tempButton.remove();
-            }
-            const selectItem = originalSelect.parentElement;
-            this.selectCallback(selectItem, originalSelect);
-        }
-        selectDisabled(selectItem, originalSelect) {
-            if (originalSelect.disabled) {
-                selectItem.classList.add(this.selectClasses.classSelectDisabled);
-                this.getSelectElement(selectItem, this.selectClasses.classSelectTitle).selectElement.disabled = true;
-            } else {
-                selectItem.classList.remove(this.selectClasses.classSelectDisabled);
-                this.getSelectElement(selectItem, this.selectClasses.classSelectTitle).selectElement.disabled = false;
-            }
-        }
-        searchActions(selectItem) {
-            this.getSelectElement(selectItem).originalSelect;
-            const selectInput = this.getSelectElement(selectItem, this.selectClasses.classSelectInput).selectElement;
-            const selectOptions = this.getSelectElement(selectItem, this.selectClasses.classSelectOptions).selectElement;
-            const selectOptionsItems = selectOptions.querySelectorAll(`.${this.selectClasses.classSelectOption}`);
-            const _this = this;
-            selectInput.addEventListener("input", (function() {
-                selectOptionsItems.forEach((selectOptionsItem => {
-                    if (selectOptionsItem.textContent.toUpperCase().indexOf(selectInput.value.toUpperCase()) >= 0) selectOptionsItem.hidden = false; else selectOptionsItem.hidden = true;
-                }));
-                selectOptions.hidden === true ? _this.selectAction(selectItem) : null;
-            }));
-        }
-        selectCallback(selectItem, originalSelect) {
-            document.dispatchEvent(new CustomEvent("selectCallback", {
-                detail: {
-                    select: originalSelect
-                }
-            }));
-        }
-        setLogging(message) {
-            this.config.logging ? functions_FLS(`[select]: ${message}`) : null;
-        }
-    }
-    modules_flsModules.select = new SelectConstructor({});
     let addWindowScrollEvent = false;
     setTimeout((() => {
         if (addWindowScrollEvent) {
@@ -813,31 +491,37 @@
     const da = new DynamicAdapt("max");
     da.init();
     const blockCounters = {};
-    document.getElementById("doorsWrapperButton")?.addEventListener("click", (function(event) {
+    const doorsWrapperButton = document.getElementById("doorsWrapperButton");
+    const windowsWrapperButton = document.getElementById("windowsWrapperButton");
+    addBlock("windows", "windowsWrapper", false);
+    addBlock("doors", "doorsWrapper", false);
+    if (windowsWrapperButton) windowsWrapperButton.addEventListener("click", (event => {
         event.preventDefault();
-        addBlock("doors", "doorsWrapper");
+        addBlock("windows", "windowsWrapper", true);
     }));
-    document.getElementById("windowsWrapperButton")?.addEventListener("click", (function(event) {
+    if (doorsWrapperButton) doorsWrapperButton.addEventListener("click", (event => {
         event.preventDefault();
-        addBlock("windows", "windowsWrapper");
+        console.log("Clicked Doors Button");
+        addBlock("doors", "doorsWrapper", true);
     }));
-    document.getElementById("bathroomWrapperButton")?.addEventListener("click", (function(event) {
-        event.preventDefault();
-        addBlock("bathroom", "bathroomWrapper");
-    }));
-    function addBlock(blockType, wrapperId) {
+    function addBlock(blockType, wrapperId, isOpen = false) {
         if (!blockCounters[wrapperId]) blockCounters[wrapperId] = {};
-        const blockId = `${blockType}Block_${Date.now()}`;
-        const translatedBlockType = getBlockTypeLabel(blockType);
-        const blockCounter = getBlockCounter(blockType, wrapperId);
-        const newBlock = `\n    <div class="tabs__inner tabs__inner_${blockType}" id="${blockId}">\n      <div class="tabs__header">\n        <h3 data-row class="tabs__topic">${getTopicLabel(translatedBlockType)} #${blockCounter}</h3>\n        <button type="button" class="tabs__close tabs__close_${blockType}" id="${blockId}_closeBtn">\n          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">\n            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.41401 8.00001L12.707 4.70701C13.098 4.31601 13.098 3.68401 12.707 3.29301C12.316 2.90201 11.684 2.90201 11.293 3.29301L8.00001 6.58601L4.70701 3.29301C4.31601 2.90201 3.68401 2.90201 3.29301 3.29301C2.90201 3.68401 2.90201 4.31601 3.29301 4.70701L6.58601 8.00001L3.29301 11.293C2.90201 11.684 2.90201 12.316 3.29301 12.707C3.48801 12.902 3.74401 13 4.00001 13C4.25601 13 4.51201 12.902 4.70701 12.707L8.00001 9.41401L11.293 12.707C11.488 12.902 11.744 13 12 13C12.256 13 12.512 12.902 12.707 12.707C13.098 12.316 13.098 11.684 12.707 11.293L9.41401 8.00001Z" fill="#8B93A5"/>\n          </svg>\n        </button>\n      </div>\n      <div class="tabs__form form-tabs">\n        <div class="form-tabs__line">\n          <label for="${blockId}_input4" class="form-tabs__label">Ширина ${translatedBlockType}</label>\n          <div class="form-tabs__wrapper">\n            <input id="${blockId}_input4" type="number" class="form-tabs__input input" placeholder="0.0">\n            <span class="form-tabs__measurement">сантиметры (см)</span>\n          </div>\n        </div>\n        <div class="form-tabs__line">\n          <label for="${blockId}_input5" class="form-tabs__label">Высота ${translatedBlockType}</label>\n          <div class="form-tabs__wrapper">\n            <input id="${blockId}_input5" type="number" class="form-tabs__input input" placeholder="0.0">\n            <span class="form-tabs__measurement">сантиметры (см)</span>\n          </div>\n        </div>\n      </div>\n    </div>\n  `;
         blockCounters[wrapperId][blockType] = (blockCounters[wrapperId][blockType] || 0) + 1;
+        const blockCounter = getBlockCounter(blockType, wrapperId);
+        const blockId = `${blockType}Block_${blockCounter}`;
+        const translatedBlockType = getBlockTypeLabel(blockType);
+        const inputClassWidth = `input_${blockType}-width${isOpen ? " input_number" : ""}`;
+        const inputClassHeight = `input_${blockType}-height${isOpen ? " input_number" : ""}`;
+        const closeBtn = isOpen ? `<button type="button" class="tabs__close tabs__close_${blockType}" id="${blockId}_closeBtn">\n        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">\n          <path fill-rule="evenodd" clip-rule="evenodd" d="M9.41401 8.00001L12.707 4.70701C13.098 4.31601 13.098 3.68401 12.707 3.29301C12.316 2.90201 11.684 2.90201 11.293 3.29301L8.00001 6.58601L4.70701 3.29301C4.31601 2.90201 3.68401 2.90201 3.29301 3.29301C2.90201 3.68401 2.90201 4.31601 3.29301 4.70701L6.58601 8.00001L3.29301 11.293C2.90201 11.684 2.90201 12.316 3.29301 12.707C3.48801 12.902 3.74401 13 4.00001 13C4.25601 13 4.51201 12.902 4.70701 12.707L8.00001 9.41401L11.293 12.707C11.488 12.902 11.744 13 12 13C12.256 13 12.512 12.902 12.707 12.707C13.098 12.316 13.098 11.684 12.707 11.293L9.41401 8.00001Z" fill="#8B93A5"/>\n        </svg>\n      </button>` : "";
+        const newBlock = `\n    <div class="tabs__inner tabs__inner_${blockType}" id="${blockId}">\n      <div class="tabs__header">\n        <h3 data-row class="tabs__topic">${getTopicLabel(translatedBlockType)} #${blockCounter}</h3>\n        ${closeBtn}\n      </div>\n      <div class="tabs__form form-tabs">\n        <div class="form-tabs__line">\n          <label for="${blockId}_input4" class="form-tabs__label">Ширина ${translatedBlockType}</label>\n          <div class="form-tabs__wrapper">\n            <input id="${blockId}_input4" type="string" class="form-tabs__input input input_number ${inputClassWidth}" placeholder="0">\n            <span class="form-tabs__measurement">метры (м)</span>\n          </div>\n        </div>\n        <div class="form-tabs__line">\n          <label for="${blockId}_input5" class="form-tabs__label">Высота ${translatedBlockType}</label>\n          <div class="form-tabs__wrapper">\n            <input id="${blockId}_input5" type="string" class="form-tabs__input input input_number ${inputClassHeight}" placeholder="0">\n            <span class="form-tabs__measurement">метры (м)</span>\n          </div>\n        </div>\n      </div>\n    </div>\n  `;
         const blockWrapper = document.getElementById(wrapperId);
-        blockWrapper.insertAdjacentHTML("beforeend", newBlock);
-        const closeBtn = document.getElementById(`${blockId}_closeBtn`);
-        closeBtn.addEventListener("click", (function() {
-            removeBlock(blockType, blockId, wrapperId);
-        }));
+        if (blockWrapper) blockWrapper.insertAdjacentHTML("beforeend", newBlock);
+        if (isOpen) {
+            const closeBtn = document.getElementById(`${blockId}_closeBtn`);
+            if (closeBtn) closeBtn.addEventListener("click", (function() {
+                removeBlock(blockType, blockId, wrapperId);
+            }));
+        }
         updateSerialNumbers(blockType, wrapperId);
     }
     function getBlockTypeLabel(blockType) {
@@ -848,7 +532,7 @@
           case "windows":
             return "окна";
 
-          case "bathroom":
+          case "bathrooms":
             return "Ванны";
 
           default:
@@ -885,6 +569,1004 @@
     function getBlockCounter(blockType, wrapperId) {
         return blockCounters[wrapperId][blockType] || 0;
     }
+    function setupCalculation(className, calculationLabel, surfaceClass, lengthClass, widthClass, heightClass) {
+        const calculateBtn = document.querySelector(`.${className}`);
+        const resultsItemsWrapper = document.querySelector(".result__items");
+        const resultDefault = document.querySelector(".result__default");
+        const resultBody = document.querySelector(".result__body");
+        const tabButtons = document.querySelectorAll("[data-tabs-titles] button");
+        function resetResultDisplay() {
+            resultsItemsWrapper.innerHTML = "";
+            resultDefault.style.display = "block";
+            resultBody.style.display = "none";
+        }
+        function getInputValues() {
+            const widthOfSurface = document.querySelector(`.${surfaceClass}`).value;
+            const surfaceLengthHeight = document.querySelector(`.${lengthClass}`).value;
+            const widthOfPlasterBoard = document.querySelector(`.${widthClass}`).value;
+            const heightOfPlasterBoard = document.querySelector(`.${heightClass}`).value;
+            if (!widthOfSurface || !surfaceLengthHeight || !widthOfPlasterBoard || !heightOfPlasterBoard) {
+                handleInputValidation();
+                return null;
+            }
+            return {
+                widthOfSurface: Number(widthOfSurface),
+                surfaceLengthHeight: Number(surfaceLengthHeight),
+                widthOfPlasterBoard: Number(widthOfPlasterBoard),
+                heightOfPlasterBoard: Number(heightOfPlasterBoard)
+            };
+        }
+        function handleInputValidation() {
+            const numberInputFields = document.querySelectorAll(`.${className} .input_number`);
+            numberInputFields.forEach((inputField => {
+                const formWrapper = inputField.closest(".form-tabs__wrapper");
+                if (!inputField.value) formWrapper.classList.add("error"); else formWrapper.classList.remove("error");
+            }));
+        }
+        function calculateDerivedValues(inputValues) {
+            const widthOfPlasterBoardResult = inputValues.widthOfPlasterBoard / 1e3;
+            const heightOfPlasterBoardResult = inputValues.heightOfPlasterBoard / 1e3;
+            const surfaceArea = inputValues.widthOfSurface * inputValues.surfaceLengthHeight;
+            const areaOneSheet = widthOfPlasterBoardResult * heightOfPlasterBoardResult;
+            let numberOfSheets;
+            if (className === "form-tabs_1") numberOfSheets = Math.ceil(surfaceArea / areaOneSheet) * 2; else if (className === "form-tabs_2") numberOfSheets = Math.ceil(surfaceArea / areaOneSheet); else if (className === "form-tabs_3") numberOfSheets = Math.ceil(surfaceArea / areaOneSheet);
+            return {
+                widthOfPlasterBoardResult,
+                heightOfPlasterBoardResult,
+                surfaceArea,
+                areaOneSheet,
+                numberOfSheets
+            };
+        }
+        const displayUI = data => {
+            resultsItemsWrapper.innerHTML = "";
+            const formWrappers = document.querySelectorAll(`.${className} .form-tabs__wrapper`);
+            formWrappers.forEach((formWrapper => formWrapper.classList.remove("error")));
+            data.forEach((({label, value}) => {
+                const html = `\n        <div class="result__item">\n          <div class="result__label">${label}</div>\n          <div class="result__value">${value}</div>\n        </div>\n      `;
+                resultsItemsWrapper.insertAdjacentHTML("afterbegin", html);
+            }));
+            resultDefault.style.display = "none";
+            resultBody.style.display = "block";
+        };
+        if (calculateBtn) calculateBtn.addEventListener("click", (e => {
+            e.preventDefault();
+            calculate();
+        }));
+        const numberInputFields = document.querySelectorAll(".input_number");
+        numberInputFields.forEach((inputField => {
+            inputField.addEventListener("input", (() => {
+                const formWrapper = inputField.closest(".form-tabs__wrapper");
+                const inputValue = inputField.value;
+                const sanitizedValue = inputValue.replace(/,/g, ".");
+                const sanitizedInput = sanitizedValue.replace(/[^\d.,]/g, "");
+                inputField.value = sanitizedInput;
+                formWrapper.classList.remove("error");
+            }));
+        }));
+        function calculate() {
+            const inputValues = getInputValues();
+            if (inputValues) {
+                const calculatedValues = calculateDerivedValues(inputValues);
+                const resultData = [ {
+                    label: calculationLabel,
+                    value: calculatedValues.numberOfSheets
+                }, {
+                    label: "Площадь одного листа гипсокартона (м²)",
+                    value: calculatedValues.areaOneSheet
+                }, {
+                    label: "Площадь поверхности (м²)",
+                    value: calculatedValues.surfaceArea
+                }, {
+                    label: "Высота листа гипсокартона (м)",
+                    value: calculatedValues.heightOfPlasterBoardResult
+                }, {
+                    label: "Ширина листа гипсокартона (м)",
+                    value: calculatedValues.widthOfPlasterBoardResult
+                } ];
+                displayUI(resultData);
+            }
+        }
+        tabButtons.forEach((button => {
+            button.addEventListener("click", (() => {
+                resetResultDisplay();
+            }));
+        }));
+    }
+    function setupCalculation1() {
+        setupCalculation("form-tabs_1", "Количество листов гипсокартона", "input_width-surface", "input_surface-length", "input_plasterboard-width", "input_plasterboard-height");
+    }
+    function setupCalculation2() {
+        setupCalculation("form-tabs_2", "Количество листов гипсокартона", "input_width-surface-2", "input_surface-length-2", "input_plasterboard-width-2", "input_plasterboard-height-2");
+    }
+    function setupCalculation3() {
+        setupCalculation("form-tabs_3", "Количество листов гипсокартона", "input_width-surface-3", "input_surface-length-3", "input_plasterboard-width-3", "input_plasterboard-height-3");
+    }
+    setupCalculation1();
+    setupCalculation2();
+    setupCalculation3();
+    function setupCalculationPain(className, surfaceClass, lengthClass, layerClass) {
+        const calculateBtn = document.querySelector(`.calculator-paint`);
+        const resultsItemsWrapper = document.querySelector(".result__items");
+        const resultDefault = document.querySelector(".result__default");
+        const resultBody = document.querySelector(".result__body");
+        const tabButtons = document.querySelectorAll("[data-tabs-titles] button");
+        function resetResultDisplay() {
+            resultsItemsWrapper.innerHTML = "";
+            resultDefault.style.display = "block";
+            resultBody.style.display = "none";
+        }
+        function getInputValues() {
+            const widthOfSurface = document.querySelector(`.${surfaceClass}`).value;
+            const surfaceLengthHeight = document.querySelector(`.${lengthClass}`).value;
+            const numberOfLayers = document.querySelector(`.${layerClass}`).value;
+            const selectedMaterialInput = document.querySelector(".options__input_type:checked");
+            const selectedMaterialValue = selectedMaterialInput ? parseFloat(selectedMaterialInput.value) : 1;
+            const selectedPaintTypeInput = document.querySelector(".options__input_paintType:checked");
+            const selectedPaintTypeValue = selectedPaintTypeInput ? parseFloat(selectedPaintTypeInput.value) : 1;
+            if (!widthOfSurface || !surfaceLengthHeight || !numberOfLayers) {
+                handleInputValidation();
+                return null;
+            }
+            return {
+                widthOfSurface: Number(widthOfSurface),
+                surfaceLengthHeight: Number(surfaceLengthHeight),
+                numberOfLayers: Number(numberOfLayers),
+                selectedMaterialValue,
+                selectedPaintTypeValue
+            };
+        }
+        function handleInputValidation() {
+            const numberInputFields = document.querySelectorAll(`.${className} .input_number`);
+            numberInputFields.forEach((inputField => {
+                const formWrapper = inputField.closest(".form-tabs__wrapper");
+                if (!inputField.value) formWrapper.classList.add("error"); else formWrapper.classList.remove("error");
+            }));
+        }
+        function calculateDerivedValues(inputValues) {
+            const surfaceArea = inputValues.widthOfSurface * inputValues.surfaceLengthHeight;
+            let materialFactor;
+            let paintTypeFactor;
+            switch (inputValues.selectedMaterialValue) {
+              case .9:
+                materialFactor = .9;
+                break;
+
+              case .8:
+                materialFactor = .8;
+                break;
+
+              case 1:
+                materialFactor = 1;
+                break;
+
+              default:
+                materialFactor = 1;
+            }
+            switch (inputValues.selectedPaintTypeValue) {
+              case .25:
+                paintTypeFactor = .25;
+                break;
+
+              case .6:
+                paintTypeFactor = .6;
+                break;
+
+              case .2:
+                paintTypeFactor = .2;
+                break;
+
+              case .55:
+                paintTypeFactor = .55;
+                break;
+
+              case .3:
+                paintTypeFactor = .3;
+                break;
+
+              case .4:
+                paintTypeFactor = .4;
+                break;
+
+              case .15:
+                paintTypeFactor = .15;
+                break;
+
+              default:
+                paintTypeFactor = 1;
+            }
+            const totalPaintConsumption = surfaceArea * paintTypeFactor * inputValues.numberOfLayers * materialFactor;
+            return {
+                surfaceArea,
+                materialFactor,
+                paintTypeFactor,
+                totalPaintConsumption
+            };
+        }
+        const displayUI = data => {
+            resultsItemsWrapper.innerHTML = "";
+            const formWrappers = document.querySelectorAll(`.${className} .form-tabs__wrapper`);
+            formWrappers.forEach((formWrapper => formWrapper.classList.remove("error")));
+            data.forEach((({label, value}) => {
+                const html = `\n        <div class="result__item">\n          <div class="result__label">${label}</div>\n          <div class="result__value">${value}</div>\n        </div>\n      `;
+                resultsItemsWrapper.insertAdjacentHTML("afterbegin", html);
+            }));
+            resultDefault.style.display = "none";
+            resultBody.style.display = "block";
+        };
+        if (calculateBtn) calculateBtn.addEventListener("click", (e => {
+            e.preventDefault();
+            calculate();
+        }));
+        const numberInputFields = document.querySelectorAll(".input_number");
+        numberInputFields.forEach((inputField => {
+            inputField.addEventListener("input", (() => {
+                const formWrapper = inputField.closest(".form-tabs__wrapper");
+                const inputValue = inputField.value;
+                const sanitizedValue = inputValue.replace(/,/g, ".");
+                const sanitizedInput = sanitizedValue.replace(/[^\d.,]/g, "");
+                inputField.value = sanitizedInput;
+                formWrapper.classList.remove("error");
+            }));
+        }));
+        function calculate() {
+            const inputValues = getInputValues();
+            if (inputValues) {
+                const calculatedValues = calculateDerivedValues(inputValues);
+                const resultData = [ {
+                    label: "Коэффициент для типа поверхности",
+                    value: calculatedValues.materialFactor
+                }, {
+                    label: "Общий расход краски (литры)",
+                    value: calculatedValues.totalPaintConsumption
+                }, {
+                    label: "Расход краски на м² (литр)",
+                    value: calculatedValues.paintTypeFactor
+                }, {
+                    label: "Площадь поверхности (м²)",
+                    value: calculatedValues.surfaceArea
+                } ];
+                displayUI(resultData);
+            }
+        }
+        tabButtons.forEach((button => {
+            button.addEventListener("click", (() => {
+                resetResultDisplay();
+            }));
+        }));
+    }
+    setupCalculationPain("form-tabs_paint", "input_width-surface", "input_surface-length", "input_surface-layers");
+    function setupWalpaperCalc(className, roomLength, roomWidth, roomHeight, walpaperRollWidth, walpaperRollLength, rapport, margin, pricePerRoll) {
+        const calculateBtn = document.querySelector(`.wall-tiles-btn`);
+        const resultsItemsWrapper = document.querySelector(".result__items");
+        const resultDefault = document.querySelector(".result__default");
+        const resultBody = document.querySelector(".result__body");
+        const tabButtons = document.querySelectorAll("[data-tabs-titles] button");
+        function resetResultDisplay() {
+            resultsItemsWrapper.innerHTML = "";
+            resultDefault.style.display = "block";
+            resultBody.style.display = "none";
+        }
+        function getInputValues() {
+            const roomLength1 = document.querySelector(`.${roomLength}`).value;
+            const roomWidth1 = document.querySelector(`.${roomWidth}`).value;
+            const roomHeight1 = document.querySelector(`.${roomHeight}`).value;
+            const walpaperRollWidth1 = document.querySelector(`.${walpaperRollWidth}`).value;
+            const walpaperRollLength1 = document.querySelector(`.${walpaperRollLength}`).value;
+            const rapport1 = document.querySelector(`.${rapport}`).value;
+            const margin1 = document.querySelector(`.${margin}`).value;
+            const pricePerRoll1 = document.querySelector(`.${pricePerRoll}`).value;
+            if (!roomLength1 || !roomWidth1 || !roomHeight1 || !walpaperRollWidth1 || !walpaperRollLength1 || !rapport1 || !margin1 || !pricePerRoll1) {
+                handleInputValidation();
+                return null;
+            }
+            return {
+                roomLength1: Number(roomLength1),
+                roomWidth1: Number(roomWidth1),
+                roomHeight1: Number(roomHeight1),
+                walpaperRollWidth1: Number(walpaperRollWidth1),
+                walpaperRollLength1: Number(walpaperRollLength1),
+                rapport1: Number(rapport1),
+                margin1: Number(margin1),
+                pricePerRoll1: Number(pricePerRoll1)
+            };
+        }
+        function handleInputValidation() {
+            const numberInputFields = document.querySelectorAll(`.${className} .input_number`);
+            numberInputFields.forEach((inputField => {
+                const formWrapper = inputField.closest(".form-tabs__wrapper");
+                if (!inputField.value) formWrapper.classList.add("error"); else formWrapper.classList.remove("error");
+            }));
+        }
+        function calculateDerivedValues(inputValues) {
+            let areaOfWindowsDoors = 0;
+            const windowTotal = calculateTotalAreaForWindows();
+            const doorTotal = calculateTotalAreaForDoors();
+            areaOfWindowsDoors = Number(doorTotal + windowTotal).toFixed(2);
+            function calculateTotalAreaForDoors() {
+                const doorsInputs = Array.from(document.querySelectorAll(`#doorsWrapper input`));
+                const totalArea = doorsInputs.reduce(((accumulator, input) => {
+                    const value = parseFloat(input.value.trim());
+                    if (!isNaN(value)) return accumulator * value;
+                    return 0;
+                }), 1);
+                return totalArea;
+            }
+            function calculateTotalAreaForWindows() {
+                const doorsInputs = Array.from(document.querySelectorAll(`#windowsWrapper input`));
+                const totalArea = doorsInputs.reduce(((accumulator, input) => {
+                    const value = parseFloat(input.value.trim());
+                    if (!isNaN(value)) return accumulator * value;
+                    return 0;
+                }), 1);
+                return totalArea;
+            }
+            inputValues.walpaperRollLength1, inputValues.walpaperRollWidth1;
+            inputValues.doorHeight1, inputValues.rapport1, inputValues.margin1;
+            const roomPerimeter = (inputValues.roomLength1 + inputValues.roomWidth1) * 2;
+            inputValues.roomLength1, inputValues.roomWidth1;
+            const coverageArea = roomPerimeter * inputValues.roomHeight1 - areaOfWindowsDoors;
+            const realStripMargin = inputValues.roomHeight1 - inputValues.rapport1 * inputValues.margin1;
+            const numberOfStripsOneRoll = Math.floor(inputValues.walpaperRollLength1 / realStripMargin);
+            const requiredNumberOfStripes = Math.ceil(coverageArea / (inputValues.walpaperRollWidth1 * realStripMargin));
+            const requiredNumberOfWalpaperRolls = Math.ceil(requiredNumberOfStripes / numberOfStripsOneRoll);
+            const totalCostOfRolls = requiredNumberOfWalpaperRolls * inputValues.pricePerRoll1;
+            const totalAreaOfAllWalls = (inputValues.roomLength1 + inputValues.roomWidth1) * 2 * inputValues.roomHeight1;
+            return {
+                requiredNumberOfWalpaperRolls,
+                totalCostOfRolls,
+                totalAreaOfAllWalls,
+                roomPerimeter,
+                areaOfWindowsDoors
+            };
+        }
+        const displayUI = data => {
+            resultsItemsWrapper.innerHTML = "";
+            const formWrappers = document.querySelectorAll(`.${className} .form-tabs__wrapper`);
+            formWrappers.forEach((formWrapper => formWrapper.classList.remove("error")));
+            data.forEach((({label, value}) => {
+                const html = `\n        <div class="result__item">\n          <div class="result__label">${label}</div>\n          <div class="result__value">${value}</div>\n        </div>\n      `;
+                resultsItemsWrapper.insertAdjacentHTML("afterbegin", html);
+            }));
+            resultDefault.style.display = "none";
+            resultBody.style.display = "block";
+        };
+        if (calculateBtn) if (!calculateBtn.hasEventListener) {
+            calculateBtn.hasEventListener = true;
+            calculateBtn.addEventListener("click", (e => {
+                e.preventDefault();
+                setupInputSanitization();
+                calculate();
+            }));
+        }
+        function setupInputSanitization() {
+            const numberInputFields = document.querySelectorAll(".input_number");
+            numberInputFields.forEach((inputField => {
+                inputField.addEventListener("input", (() => {
+                    const formWrapper = inputField.closest(".form-tabs__wrapper");
+                    const inputValue = inputField.value;
+                    const sanitizedValue = inputValue.replace(/,/g, ".");
+                    const sanitizedInput = sanitizedValue.replace(/[^\d.,]/g, "");
+                    inputField.value = sanitizedInput;
+                    formWrapper.classList.remove("error");
+                }));
+            }));
+        }
+        document.addEventListener("DOMContentLoaded", (() => {
+            setupInputSanitization();
+        }));
+        function calculate(callback) {
+            const inputValues = getInputValues();
+            if (inputValues) {
+                const calculatedValues = calculateDerivedValues(inputValues);
+                const resultData = [ {
+                    label: "Периметр комнаты",
+                    value: calculatedValues.roomPerimeter
+                }, {
+                    label: "Общая площадь всех стен:",
+                    value: calculatedValues.totalAreaOfAllWalls
+                }, {
+                    label: "Общая стоиомть рулонов",
+                    value: calculatedValues.totalCostOfRolls
+                }, {
+                    label: "Требуемое количество рулонов обоев",
+                    value: calculatedValues.requiredNumberOfWalpaperRolls
+                } ];
+                displayUI(resultData);
+                if (callback) callback(inputValues);
+            }
+        }
+        tabButtons.forEach((button => {
+            button.addEventListener("click", (() => {
+                resetResultDisplay();
+            }));
+        }));
+    }
+    setupWalpaperCalc("tabs__body_wall-tiles", "input_roomLength", "input_roomWidth", "input_roomHeight", "input_walpaperRollWidth", "input_walpaperRollLength", "input_rapport", "input_margin", "input_pricePerRoll");
+    function setupCalculationLam(className, roomLength, roomWidth, lengthOfPanel, widthOfPanel, numberOfPanelsInPackage) {
+        const calculateBtn = document.querySelector(`.calculator-laminate`);
+        const resultsItemsWrapper = document.querySelector(".result__items");
+        const resultDefault = document.querySelector(".result__default");
+        const resultBody = document.querySelector(".result__body");
+        const tabButtons = document.querySelectorAll("[data-tabs-titles] button");
+        function resetResultDisplay() {
+            resultsItemsWrapper.innerHTML = "";
+            resultDefault.style.display = "block";
+            resultBody.style.display = "none";
+        }
+        function getInputValues() {
+            const roomLength1 = document.querySelector(`.${roomLength}`).value;
+            const roomWidth1 = document.querySelector(`.${roomWidth}`).value;
+            const lengthOfPanel1 = document.querySelector(`.${lengthOfPanel}`).value;
+            const widthOfPanel1 = document.querySelector(`.${widthOfPanel}`).value;
+            const numberOfPanelsInPackage1 = document.querySelector(`.${numberOfPanelsInPackage}`).value;
+            const selectedMethodLaminateInput = document.querySelector(".options__input_methodLaminate:checked");
+            const selectedMethodLaminateValue = selectedMethodLaminateInput ? parseFloat(selectedMethodLaminateInput.value) : 1;
+            if (!roomLength1 || !roomWidth1 || !lengthOfPanel1 || !widthOfPanel1 || !numberOfPanelsInPackage1) {
+                handleInputValidation();
+                return null;
+            }
+            return {
+                roomLength1: Number(roomLength1),
+                roomWidth1: Number(roomWidth1),
+                lengthOfPanel1: Number(lengthOfPanel1),
+                widthOfPanel1,
+                numberOfPanelsInPackage1,
+                selectedMethodLaminateValue
+            };
+        }
+        function handleInputValidation() {
+            const numberInputFields = document.querySelectorAll(`.${className} .input_number`);
+            numberInputFields.forEach((inputField => {
+                const formWrapper = inputField.closest(".form-tabs__wrapper");
+                if (!inputField.value) formWrapper.classList.add("error"); else formWrapper.classList.remove("error");
+            }));
+        }
+        function calculateDerivedValues(inputValues) {
+            const roomArea = inputValues.roomLength1 * inputValues.roomWidth1;
+            const panelAera = inputValues.lengthOfPanel1 * inputValues.widthOfPanel1;
+            const withoutLeftOvers = roomArea / panelAera;
+            let methodLaminateFactor;
+            switch (inputValues.selectedMethodLaminateValue) {
+              case 1:
+                methodLaminateFactor = 1;
+                break;
+
+              case 1.05:
+                methodLaminateFactor = 1.05;
+                break;
+
+              case 1.1:
+                methodLaminateFactor = 1.1;
+                break;
+
+              case 1.12:
+                methodLaminateFactor = 1.12;
+                break;
+
+              case 1.15:
+                methodLaminateFactor = 1.15;
+                break;
+
+              case 1.2:
+                methodLaminateFactor = 1.2;
+                break;
+
+              default:
+                methodLaminateFactor = 1;
+            }
+            const coefficientFitting = methodLaminateFactor;
+            const totalNumberOfPanels = Math.ceil(withoutLeftOvers * coefficientFitting);
+            const quantityOfPackages = Math.ceil(totalNumberOfPanels / inputValues.numberOfPanelsInPackage1);
+            return {
+                roomArea,
+                panelAera,
+                withoutLeftOvers,
+                coefficientFitting,
+                totalNumberOfPanels,
+                quantityOfPackages
+            };
+        }
+        const displayUI = data => {
+            resultsItemsWrapper.innerHTML = "";
+            const formWrappers = document.querySelectorAll(`.${className} .form-tabs__wrapper`);
+            formWrappers.forEach((formWrapper => formWrapper.classList.remove("error")));
+            data.forEach((({label, value}) => {
+                const html = `\n        <div class="result__item">\n          <div class="result__label">${label}</div>\n          <div class="result__value">${value}</div>\n        </div>\n      `;
+                resultsItemsWrapper.insertAdjacentHTML("afterbegin", html);
+            }));
+            resultDefault.style.display = "none";
+            resultBody.style.display = "block";
+        };
+        if (calculateBtn) calculateBtn.addEventListener("click", (e => {
+            e.preventDefault();
+            calculate();
+        }));
+        const numberInputFields = document.querySelectorAll(".input_number");
+        numberInputFields.forEach((inputField => {
+            inputField.addEventListener("input", (() => {
+                const formWrapper = inputField.closest(".form-tabs__wrapper");
+                const inputValue = inputField.value;
+                const sanitizedValue = inputValue.replace(/,/g, ".");
+                const sanitizedInput = sanitizedValue.replace(/[^\d.,]/g, "");
+                inputField.value = sanitizedInput;
+                formWrapper.classList.remove("error");
+            }));
+        }));
+        function calculate() {
+            const inputValues = getInputValues();
+            if (inputValues) {
+                const calculatedValues = calculateDerivedValues(inputValues);
+                const resultData = [ {
+                    label: "Количество упаковок",
+                    value: calculatedValues.quantityOfPackages
+                }, {
+                    label: "Итоговое количество панелей",
+                    value: calculatedValues.totalNumberOfPanels
+                }, {
+                    label: "Коэффициент укладки",
+                    value: calculatedValues.coefficientFitting
+                }, {
+                    label: "Количество панелей без учета остатков",
+                    value: calculatedValues.withoutLeftOvers
+                }, {
+                    label: "Площадь панели (м²)",
+                    value: calculatedValues.panelAera
+                }, {
+                    label: "Площадь комнаты (м²)",
+                    value: calculatedValues.roomArea
+                } ];
+                displayUI(resultData);
+            }
+        }
+        tabButtons.forEach((button => {
+            button.addEventListener("click", (() => {
+                resetResultDisplay();
+            }));
+        }));
+    }
+    setupCalculationLam("form-body_laminate", "input_roomLength", "input_roomWidth", "input_lengthOfPanel", "input_widthOfPanel", "input_numberOfPanelsInPackage");
+    function setupCalculationPlaster(className, lengthWall, heightWall, thicknessLayer, bagMass) {
+        const calculateBtn = document.querySelector(`.calculator-plaster`);
+        const resultsItemsWrapper = document.querySelector(".result__items");
+        const resultDefault = document.querySelector(".result__default");
+        const resultBody = document.querySelector(".result__body");
+        const tabButtons = document.querySelectorAll("[data-tabs-titles] button");
+        function resetResultDisplay() {
+            resultsItemsWrapper.innerHTML = "";
+            resultDefault.style.display = "block";
+            resultBody.style.display = "none";
+        }
+        function getInputValues() {
+            const lengthWall1 = document.querySelector(`.${lengthWall}`).value;
+            const heightWall1 = document.querySelector(`.${heightWall}`).value;
+            const thicknessLayer1 = document.querySelector(`.${thicknessLayer}`).value;
+            const bagMass1 = document.querySelector(`.${bagMass}`).value;
+            const selectedMethodPlasterTypeInput = document.querySelector(".options__input_plasterType:checked");
+            const selectedMethodPlasterTypeValue = selectedMethodPlasterTypeInput ? parseFloat(selectedMethodPlasterTypeInput.value) : 1;
+            if (!lengthWall1 || !heightWall1 || !thicknessLayer1 || !bagMass1 || !selectedMethodPlasterTypeValue) {
+                handleInputValidation();
+                return null;
+            }
+            return {
+                lengthWall1: Number(lengthWall1),
+                heightWall1: Number(heightWall1),
+                thicknessLayer1: Number(thicknessLayer1),
+                bagMass1,
+                selectedMethodPlasterTypeValue
+            };
+        }
+        function handleInputValidation() {
+            const numberInputFields = document.querySelectorAll(`.${className} .input_number`);
+            numberInputFields.forEach((inputField => {
+                const formWrapper = inputField.closest(".form-tabs__wrapper");
+                if (!inputField.value) formWrapper.classList.add("error"); else formWrapper.classList.remove("error");
+            }));
+        }
+        function calculateDerivedValues(inputValues) {
+            const wallArea = inputValues.lengthWall1 * inputValues.heightWall1;
+            let methodPlasterFactor;
+            switch (inputValues.selectedMethodPlasterTypeValue) {
+              case 9:
+                methodPlasterFactor = 9;
+                break;
+
+              case 17:
+                methodPlasterFactor = 17;
+                break;
+
+              default:
+                methodPlasterFactor = 1;
+            }
+            const coefficientOfLayerThickness = Math.floor(inputValues.thicknessLayer1 / methodPlasterFactor);
+            const totalConsumptionOfPlaste = wallArea * methodPlasterFactor;
+            const quantityOfPlasterBags = Math.ceil(totalConsumptionOfPlaste / inputValues.bagMass1);
+            return {
+                wallArea,
+                coefficientOfLayerThickness,
+                methodPlasterFactor,
+                totalConsumptionOfPlaste,
+                quantityOfPlasterBags
+            };
+        }
+        const displayUI = data => {
+            resultsItemsWrapper.innerHTML = "";
+            const formWrappers = document.querySelectorAll(`.${className} .form-tabs__wrapper`);
+            formWrappers.forEach((formWrapper => formWrapper.classList.remove("error")));
+            data.forEach((({label, value}) => {
+                const html = `\n        <div class="result__item">\n          <div class="result__label">${label}</div>\n          <div class="result__value">${value}</div>\n        </div>\n      `;
+                resultsItemsWrapper.insertAdjacentHTML("afterbegin", html);
+            }));
+            resultDefault.style.display = "none";
+            resultBody.style.display = "block";
+        };
+        if (calculateBtn) calculateBtn.addEventListener("click", (e => {
+            e.preventDefault();
+            calculate();
+        }));
+        const numberInputFields = document.querySelectorAll(".input_number");
+        numberInputFields.forEach((inputField => {
+            inputField.addEventListener("input", (() => {
+                const formWrapper = inputField.closest(".form-tabs__wrapper");
+                const inputValue = inputField.value;
+                const sanitizedValue = inputValue.replace(/,/g, ".");
+                const sanitizedInput = sanitizedValue.replace(/[^\d.,]/g, "");
+                inputField.value = sanitizedInput;
+                formWrapper.classList.remove("error");
+            }));
+        }));
+        function calculate() {
+            const inputValues = getInputValues();
+            if (inputValues) {
+                console.log(inputValues);
+                const calculatedValues = calculateDerivedValues(inputValues);
+                const resultData = [ {
+                    label: "Количество мешков штукатурки",
+                    value: calculatedValues.quantityOfPlasterBags
+                }, {
+                    label: "Общий расход штукатурки (кг)",
+                    value: calculatedValues.totalConsumptionOfPlaste
+                }, {
+                    label: "Расход штукатурки на 1 м² (кг)",
+                    value: calculatedValues.methodPlasterFactor
+                }, {
+                    label: "Коэффициент толщины слоя",
+                    value: calculatedValues.coefficientOfLayerThickness
+                }, {
+                    label: "Площадь стены (м²)",
+                    value: calculatedValues.wallArea
+                } ];
+                displayUI(resultData);
+            }
+        }
+        tabButtons.forEach((button => {
+            button.addEventListener("click", (() => {
+                resetResultDisplay();
+            }));
+        }));
+    }
+    setupCalculationPlaster("tabs__body_plaster", "input_lengthWall", "input_heightWall", "input_thicknessLayer", "input_bagMass");
+    document.addEventListener("DOMContentLoaded", (function() {
+        var pinWrapper = document.querySelector(".pin-wrapper");
+        if (pinWrapper) {
+            var pinBlock = document.querySelector(".pin-block");
+            var placeholder = document.createElement("div");
+            placeholder.classList.add("pin-block-placeholder");
+            function getHeaderHeight() {
+                var header = document.querySelector(".header");
+                return header ? header.offsetHeight : 0;
+            }
+            function handleScroll() {
+                if (window.innerWidth >= 767.98) {
+                    var pinBlockOffset = pinWrapper.offsetTop - getHeaderHeight() - 20;
+                    var scrollPosition = window.scrollY;
+                    if (scrollPosition >= pinBlockOffset) {
+                        pinBlock.classList.add("pinned");
+                        pinBlock.style.position = "fixed";
+                        placeholder.style.height = pinBlock.clientHeight + "px";
+                    } else {
+                        pinBlock.classList.remove("pinned");
+                        pinBlock.style.position = "static";
+                        placeholder.style.height = "0";
+                    }
+                }
+            }
+            function handleResize() {
+                handleScroll();
+            }
+            window.addEventListener("scroll", handleScroll);
+            window.addEventListener("resize", handleResize);
+            pinWrapper.appendChild(placeholder);
+        }
+    }));
+    function setupCalculationTiles(className, roomLength, roomWidth, roomHeight, bathWidth, bathHeight, tileLength, tileWidth, seamWidth) {
+        const calculateBtn = document.querySelector(`.calculate-tiles`);
+        const resultsItemsWrapper = document.querySelector(".result__items");
+        const resultDefault = document.querySelector(".result__default");
+        const resultBody = document.querySelector(".result__body");
+        const tabButtons = document.querySelectorAll("[data-tabs-titles] button");
+        function resetResultDisplay() {
+            resultsItemsWrapper.innerHTML = "";
+            resultDefault.style.display = "block";
+            resultBody.style.display = "none";
+        }
+        function getInputValues() {
+            const roomLength1 = document.querySelector(`.${roomLength}`).value;
+            const roomWidth1 = document.querySelector(`.${roomWidth}`).value;
+            const roomHeight1 = document.querySelector(`.${roomHeight}`).value;
+            const bathWidth1 = document.querySelector(`.${bathWidth}`).value;
+            const bathHeight1 = document.querySelector(`.${bathHeight}`).value;
+            const tileLength1 = document.querySelector(`.${tileLength}`).value;
+            const tileWidth1 = document.querySelector(`.${tileWidth}`).value;
+            const seamWidth1 = document.querySelector(`.${seamWidth}`).value;
+            const selectedBathTypeInput = document.querySelector(".options__input_bathType:checked");
+            const selectedBathTypeValue = selectedBathTypeInput ? selectedBathTypeInput.value : no;
+            const selectedMethodTilesInput = document.querySelector(".options__input_methodTiles:checked");
+            const selectedMethodTilesValue = selectedMethodTilesInput ? parseFloat(selectedMethodTilesInput.value) : 1;
+            if (!roomLength1 || !roomWidth1 || !roomHeight1 || !bathWidth1 || !bathHeight1 || !tileLength1 || !tileWidth1 || !seamWidth1 || !selectedBathTypeValue || !selectedMethodTilesValue) {
+                handleInputValidation();
+                return null;
+            }
+            return {
+                roomLength1: Number(roomLength1),
+                roomWidth1: Number(roomWidth1),
+                roomHeight1: Number(roomHeight1),
+                bathWidth1: Number(bathWidth1),
+                bathHeight1: Number(bathHeight1),
+                tileLength1: Number(tileLength1),
+                tileWidth1: Number(tileWidth1),
+                seamWidth1: Number(seamWidth1),
+                selectedBathTypeValue,
+                selectedMethodTilesValue
+            };
+        }
+        function handleInputValidation() {
+            const numberInputFields = document.querySelectorAll(`.${className} .input_number`);
+            numberInputFields.forEach((inputField => {
+                const formWrapper = inputField.closest(".form-tabs__wrapper");
+                if (!inputField.value) formWrapper.classList.add("error"); else formWrapper.classList.remove("error");
+            }));
+        }
+        function calculateDerivedValues(inputValues) {
+            let methodBathTypeFactor;
+            let methodTilesFactor;
+            switch (inputValues.selectedBathTypeValue) {
+              case "yes":
+                methodBathTypeFactor = true;
+                break;
+
+              case "no":
+                methodBathTypeFactor = false;
+                break;
+            }
+            switch (inputValues.selectedMethodTilesValue) {
+              case 1.05:
+                methodTilesFactor = 1.05;
+                break;
+
+              case 1.1:
+                methodTilesFactor = 1.1;
+                break;
+
+              case 1.15:
+                methodTilesFactor = 1.15;
+                break;
+            }
+            let windowTotal = 0;
+            const windowTotalTest = calculateTotalAreaForWindows();
+            windowTotal = windowTotalTest;
+            let doorTotal = 0;
+            const doorTotalTest = calculateTotalAreaForDoors();
+            doorTotal = doorTotalTest;
+            function calculateTotalAreaForDoors() {
+                const doorsInputs = Array.from(document.querySelectorAll(`#doorsWrapper input`));
+                const totalArea = doorsInputs.reduce(((accumulator, input) => {
+                    const value = parseFloat(input.value.trim());
+                    if (!isNaN(value)) return accumulator * value;
+                    return 0;
+                }), 1);
+                return totalArea;
+            }
+            function calculateTotalAreaForWindows() {
+                const doorsInputs = Array.from(document.querySelectorAll(`#windowsWrapper input`));
+                const totalArea = doorsInputs.reduce(((accumulator, input) => {
+                    const value = parseFloat(input.value.trim());
+                    if (!isNaN(value)) return accumulator * value;
+                    return 0;
+                }), 1);
+                return totalArea;
+            }
+            let peripheryForLining;
+            if (methodBathTypeFactor) peripheryForLining = Number(2 * (inputValues.roomLength1 + inputValues.roomWidth1) - 2 * inputValues.bathWidth1).toFixed(2); else peripheryForLining = Number(2 * (inputValues.roomLength1 + inputValues.roomWidth1).toFixed(2));
+            let totalWallAreaForCladding = Number(peripheryForLining * inputValues.roomHeight1 - doorTotal - windowTotal).toFixed(2);
+            const areaOfOneTileWithSeam = Number((inputValues.tileLength1 + inputValues.seamWidth1 / 1e3) * (inputValues.tileWidth1 + inputValues.seamWidth1 / 1e3)).toFixed(2);
+            const flowCoefficient = methodTilesFactor;
+            const numberOfTiles = Math.ceil(totalWallAreaForCladding / areaOfOneTileWithSeam * flowCoefficient);
+            return {
+                peripheryForLining,
+                totalWallAreaForCladding,
+                areaOfOneTileWithSeam,
+                flowCoefficient,
+                numberOfTiles
+            };
+        }
+        const displayUI = data => {
+            resultsItemsWrapper.innerHTML = "";
+            const formWrappers = document.querySelectorAll(`.${className} .form-tabs__wrapper`);
+            formWrappers.forEach((formWrapper => formWrapper.classList.remove("error")));
+            data.forEach((({label, value}) => {
+                const html = `\n        <div class="result__item">\n          <div class="result__label">${label}</div>\n          <div class="result__value">${value}</div>\n        </div>\n      `;
+                resultsItemsWrapper.insertAdjacentHTML("afterbegin", html);
+            }));
+            resultDefault.style.display = "none";
+            resultBody.style.display = "block";
+        };
+        if (calculateBtn) calculateBtn.addEventListener("click", (e => {
+            e.preventDefault();
+            calculate();
+        }));
+        const numberInputFields = document.querySelectorAll(".input_number");
+        numberInputFields.forEach((inputField => {
+            inputField.addEventListener("input", (() => {
+                const formWrapper = inputField.closest(".form-tabs__wrapper");
+                const inputValue = inputField.value;
+                const sanitizedValue = inputValue.replace(/,/g, ".");
+                const sanitizedInput = sanitizedValue.replace(/[^\d.,]/g, "");
+                inputField.value = sanitizedInput;
+                formWrapper.classList.remove("error");
+            }));
+        }));
+        function calculate() {
+            const inputValues = getInputValues();
+            if (inputValues) {
+                const calculatedValues = calculateDerivedValues(inputValues);
+                const resultData = [ {
+                    label: "Количество плитки (шт.)",
+                    value: calculatedValues.numberOfTiles
+                }, {
+                    label: "Коэффициент расхода",
+                    value: calculatedValues.flowCoefficient
+                }, {
+                    label: "Площадь одной плитки с швом",
+                    value: calculatedValues.areaOfOneTileWithSeam
+                }, {
+                    label: "Общая площадь стен для облицовки",
+                    value: calculatedValues.totalWallAreaForCladding
+                }, {
+                    label: "Периметр для облицовки",
+                    value: calculatedValues.peripheryForLining
+                } ];
+                displayUI(resultData);
+            }
+        }
+        tabButtons.forEach((button => {
+            button.addEventListener("click", (() => {
+                resetResultDisplay();
+            }));
+        }));
+    }
+    setupCalculationTiles("tabs__body_wall-tiles", "input_roomLength", "input_roomWidth", "input_roomHeight", "input_bathWidth", "input_bathHeight", "input_tileLength", "input_tileWidth", "input_seamWidth");
+    function setupCalculationFloorTiles(className, roomLength, roomWidth, tileLength, tileWidth, seamWidth) {
+        const calculateBtn = document.querySelector(`.calculate-floor-tiles`);
+        const resultsItemsWrapper = document.querySelector(".result__items");
+        const resultDefault = document.querySelector(".result__default");
+        const resultBody = document.querySelector(".result__body");
+        const tabButtons = document.querySelectorAll("[data-tabs-titles] button");
+        function resetResultDisplay() {
+            resultsItemsWrapper.innerHTML = "";
+            resultDefault.style.display = "block";
+            resultBody.style.display = "none";
+        }
+        function getInputValues() {
+            const roomLength1 = document.querySelector(`.${roomLength}`).value;
+            const roomWidth1 = document.querySelector(`.${roomWidth}`).value;
+            const tileLength1 = document.querySelector(`.${tileLength}`).value;
+            const tileWidth1 = document.querySelector(`.${tileWidth}`).value;
+            const seamWidth1 = document.querySelector(`.${seamWidth}`).value;
+            const selectedMethodTilesInput = document.querySelector(".options__input_methodTiles1:checked");
+            const selectedMethodTilesValue = selectedMethodTilesInput ? parseFloat(selectedMethodTilesInput.value) : 1;
+            if (!roomLength1 || !roomWidth1 || !tileLength1 || !tileWidth1 || !seamWidth1 || !selectedMethodTilesValue) {
+                handleInputValidation();
+                return null;
+            }
+            return {
+                roomLength1: Number(roomLength1),
+                roomWidth1: Number(roomWidth1),
+                tileLength1: Number(tileLength1),
+                tileWidth1: Number(tileWidth1),
+                seamWidth1: Number(seamWidth1),
+                selectedMethodTilesValue
+            };
+        }
+        function handleInputValidation() {
+            const numberInputFields = document.querySelectorAll(`.${className} .input_number`);
+            numberInputFields.forEach((inputField => {
+                const formWrapper = inputField.closest(".form-tabs__wrapper");
+                if (!inputField.value) formWrapper.classList.add("error"); else formWrapper.classList.remove("error");
+            }));
+        }
+        function calculateDerivedValues(inputValues) {
+            let methodTilesFactor;
+            switch (inputValues.selectedMethodTilesValue) {
+              case 1.05:
+                methodTilesFactor = 1.05;
+                break;
+
+              case 1.1:
+                methodTilesFactor = 1.1;
+                break;
+
+              case 1.15:
+                methodTilesFactor = 1.15;
+                break;
+
+              default:
+                methodTilesFactor = 1;
+            }
+            const roomArea = inputValues.roomLength1 * inputValues.roomWidth1;
+            const areaOfOneTile = Number((inputValues.tileLength1 + .001 * inputValues.seamWidth1) * (inputValues.tileWidth1 + .001 * inputValues.seamWidth1)).toFixed(2);
+            const trimmingFactor = methodTilesFactor;
+            const requiredNumberOfTiles = Math.ceil(roomArea / areaOfOneTile * trimmingFactor);
+            return {
+                roomArea,
+                areaOfOneTile,
+                trimmingFactor,
+                requiredNumberOfTiles
+            };
+        }
+        const displayUI = data => {
+            resultsItemsWrapper.innerHTML = "";
+            const formWrappers = document.querySelectorAll(`.${className} .form-tabs__wrapper`);
+            formWrappers.forEach((formWrapper => formWrapper.classList.remove("error")));
+            data.forEach((({label, value}) => {
+                const html = `\n        <div class="result__item">\n          <div class="result__label">${label}</div>\n          <div class="result__value">${value}</div>\n        </div>\n      `;
+                resultsItemsWrapper.insertAdjacentHTML("afterbegin", html);
+            }));
+            resultDefault.style.display = "none";
+            resultBody.style.display = "block";
+        };
+        if (calculateBtn) calculateBtn.addEventListener("click", (e => {
+            e.preventDefault();
+            calculate();
+        }));
+        const numberInputFields = document.querySelectorAll(".input_number");
+        numberInputFields.forEach((inputField => {
+            inputField.addEventListener("input", (() => {
+                const formWrapper = inputField.closest(".form-tabs__wrapper");
+                const inputValue = inputField.value;
+                const sanitizedValue = inputValue.replace(/,/g, ".");
+                const sanitizedInput = sanitizedValue.replace(/[^\d.,]/g, "");
+                inputField.value = sanitizedInput;
+                formWrapper.classList.remove("error");
+            }));
+        }));
+        function calculate() {
+            const inputValues = getInputValues();
+            if (inputValues) {
+                const calculatedValues = calculateDerivedValues(inputValues);
+                const resultData = [ {
+                    label: "Необходимое количество плитки (шт.)",
+                    value: calculatedValues.requiredNumberOfTiles
+                }, {
+                    label: "Коэффициент подрезки",
+                    value: calculatedValues.trimmingFactor
+                }, {
+                    label: "Площадь одной плитки (м²)",
+                    value: calculatedValues.areaOfOneTile
+                }, {
+                    label: "Площадь помещения (м²)",
+                    value: calculatedValues.roomArea
+                } ];
+                displayUI(resultData);
+            }
+        }
+        tabButtons.forEach((button => {
+            button.addEventListener("click", (() => {
+                resetResultDisplay();
+            }));
+        }));
+    }
+    setupCalculationFloorTiles("tabs__body_floor-tiles", "input_roomLength1", "input_roomWidth1", "input_tileLength1", "input_tileWidth1", "input_seamWidth1");
     window["FLS"] = false;
     isWebp();
     menuInit();

@@ -473,10 +473,6 @@ textarea.input {
   gap: 3rem;
 }
 
-.tabs:not(:last-child) {
-  margin-bottom: 3rem;
-}
-
 .tabs__navigation {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -563,7 +559,7 @@ textarea.input {
   padding: 0.625rem 1rem;
 }
 
-.form-tabs__line_error .form-tabs__input {
+.error .form-tabs__input {
   color: var(--Red);
 }
 
@@ -580,6 +576,7 @@ textarea.input {
 }
 
 .form-tabs__button {
+  margin-top: 30px;
   width: 100%;
   display: block;
   border-radius: 0.25rem;
@@ -884,6 +881,10 @@ textarea.input {
   padding: 2rem;
 }
 
+.result__body {
+  display: none;
+}
+
 .result__header {
   color: var(--Dark);
   font-size: 1.125rem;
@@ -942,8 +943,66 @@ textarea.input {
   line-height: 1.4285714286;
 }
 
+.result__image {
+  text-align: center;
+}
+
+.result__image:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+
+.result__topic {
+  line-height: 143%;
+  text-align: center;
+  color: var(--Dark);
+}
+
 .tabs__add {
   margin-top: 2rem;
+}
+
+.pin-wrapper {
+  position: relative;
+  /* Important for positioning the placeholder */
+}
+
+.pin-block-placeholder {
+  height: 0;
+  -webkit-transition: height 0.3s ease;
+  transition: height 0.3s ease;
+  /* Add smooth transition effect for the height change */
+}
+
+.pin-block {
+  padding: 20px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-transition: linear 0.5s ease 0s;
+  transition: linear 0.5s ease 0s;
+}
+
+.pin-block.pinned {
+  position: fixed;
+  top: 120px;
+  /* Adjust based on your fixed header height */
+  width: 24rem;
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Add a subtle shadow for the pinned effect */
+}
+
+.options_row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.form-tabs__line_options:not(:last-child) {
+  margin-bottom: 25px;
 }
 
 .header {
@@ -1144,6 +1203,10 @@ textarea.input {
 }
 
 @media (min-width: 47.99875em) {
+  .tabs:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+
   .search {
     gap: 0.5rem;
     display: -webkit-box;
@@ -1187,14 +1250,14 @@ textarea.input {
 
 @media (min-width: 61.99875em) {
   .options {
-    min-width: 17.5625rem;
+    min-width: 18.75rem;
   }
 
   .select {
     width: 354px;
   }
 
-  .form-tabs__line_error .form-tabs__input {
+  .error .form-tabs__input {
     border: 0.0625rem solid var(--Red);
   }
 
@@ -1211,7 +1274,7 @@ textarea.input {
     display: grid;
     -ms-grid-columns: 128px 1fr;
     grid-template-columns: 128px 1fr;
-    min-width: 17.5625rem;
+    min-width: 18.75rem;
     gap: 1rem;
   }
 
@@ -1261,6 +1324,12 @@ textarea.input {
   }
 }
 
+@media (max-width: 70.6875em) {
+  .pin-block.pinned {
+    top: 180px;
+  }
+}
+
 @media (max-width: 69.4375em) {
   .top-footer__list {
     display: -webkit-box;
@@ -1279,6 +1348,10 @@ textarea.input {
     -ms-grid-columns: 1fr 20rem;
     grid-template-columns: 1fr 20rem;
     gap: 1.875rem;
+  }
+
+  .pin-block.pinned {
+    width: 20rem;
   }
 }
 
@@ -1330,7 +1403,7 @@ textarea.input {
     border-radius: 0.25rem;
   }
 
-  .form-tabs__line_error .form-tabs__wrapper {
+  .form-tabs__wrapper.error {
     border: 0.0625rem solid var(--Red);
   }
 
@@ -1382,10 +1455,6 @@ textarea.input {
 
   .select__option {
     font-size: 0.875rem;
-  }
-
-  .tabs:not(:last-child) {
-    margin-bottom: 2rem;
   }
 
   .form-tabs__measurement {
@@ -1457,6 +1526,10 @@ textarea.input {
   .calculator__container {
     -ms-grid-columns: none;
     grid-template-columns: none;
+  }
+
+  .calculator__body {
+    gap: 3.125rem;
   }
 
   .calculator__result {

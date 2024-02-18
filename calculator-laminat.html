@@ -5,7 +5,7 @@
 	<title>Calculator-Laminat</title>
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="css/style.min.css?_v=20240131231752">
+	<link rel="stylesheet" href="css/style.min.css?_v=20240218164927">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -78,33 +78,25 @@
 						<div data-tabs class="tabs">
 							<nav data-tabs-titles class="tabs__navigation">
 								<button type="button" class="tabs__title _tab-active">На комнату</button>
-								<button type="button" class="tabs__title">По площади</button>
 							</nav>
 							<div data-tabs-body class="tabs__content">
-								<form action="#" class="tabs__body">
+								<form action="#" class="tabs__body form-body_laminate">
 									<div class="tabs__item">
 										<h2 class="tabs__subtitle subtitle">
 											Размер помещения
 										</h2>
 										<div class="tabs__form form-tabs">
-											<div class="form-tabs__line form-tabs__line_error">
+											<div class="form-tabs__line">
 												<label for="input1" class="form-tabs__label">Длина комнаты</label>
 												<div class="form-tabs__wrapper">
-													<input id="input1" type="number" class="form-tabs__input input" placeholder="0.0">
+													<input id="input1" type="string" class="form-tabs__input input input_roomLength input_number" placeholder="0">
 													<span class="form-tabs__measurement">метры (м)</span>
 												</div>
 											</div>
 											<div class="form-tabs__line">
 												<label for="input2" class="form-tabs__label">Ширина комнаты</label>
 												<div class="form-tabs__wrapper">
-													<input id="input2" type="number" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">метры (м)</span>
-												</div>
-											</div>
-											<div class="form-tabs__line">
-												<label for="input3" class="form-tabs__label">Высота комнаты</label>
-												<div class="form-tabs__wrapper">
-													<input id="input3" type="number" class="form-tabs__input input" placeholder="0.0">
+													<input id="input2" type="string" class="form-tabs__input input input_roomWidth input_number" placeholder="0">
 													<span class="form-tabs__measurement">метры (м)</span>
 												</div>
 											</div>
@@ -116,31 +108,24 @@
 										</h2>
 										<div class="tabs__form form-tabs">
 											<div class="form-tabs__line">
-												<label for="input4" class="form-tabs__label">Длина панели</label>
+												<label for="input4" class="form-tabs__label">Длина панели ламината</label>
 												<div class="form-tabs__wrapper">
-													<input id="input4" type="number" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">сантиметры (см)</span>
+													<input id="input4" type="string" class="form-tabs__input input input_lengthOfPanel input_number" placeholder="0">
+													<span class="form-tabs__measurement">метры (м)</span>
 												</div>
 											</div>
 											<div class="form-tabs__line">
-												<label for="input5" class="form-tabs__label">Ширина панели</label>
+												<label for="input5" class="form-tabs__label">Ширина панели ламината</label>
 												<div class="form-tabs__wrapper">
-													<input id="input5" type="number" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">сантиметры (см)</span>
+													<input id="input5" type="string" class="form-tabs__input input input_widthOfPanel input_number" placeholder="0">
+													<span class="form-tabs__measurement">метры (м)</span>
 												</div>
 											</div>
 											<div class="form-tabs__line">
 												<label for="input6" class="form-tabs__label">Число панелей в упаковке</label>
 												<div class="form-tabs__wrapper">
-													<input id="input6" type="number" class="form-tabs__input input" placeholder="0.0">
+													<input id="input6" type="string" class="form-tabs__input input input_numberOfPanelsInPackage input_number" placeholder="0">
 													<span class="form-tabs__measurement">шт</span>
-												</div>
-											</div>
-											<div class="form-tabs__line">
-												<label for="input7" class="form-tabs__label">Площадь упаковки</label>
-												<div class="form-tabs__wrapper">
-													<input id="input7" type="number" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">м2</span>
 												</div>
 											</div>
 										</div>
@@ -148,64 +133,44 @@
 									<div class="tabs__item">
 										<div class="tabs__options">
 											<h2 class="tabs__subtitle subtitle">
-												Направление укладки
+												Способ укладки ламината
 											</h2>
-
 											<div class="options">
 												<div class="options__item">
-													<input hidden id="o_1" class="options__input" checked type="radio" value="1" name="option">
-													<label for="o_1" class="options__label"><span class="options__text">Укладка по длине 0°</span></label>
+													<input hidden id="o_110" class="options__input options__input_methodLaminate" checked type="radio" value="1" name="option-methodLaminate">
+													<label for="o_110" class="options__label"><span class="options__text">Прямой без
+															остатков</span></label>
 												</div>
 												<div class="options__item">
-													<input hidden id="o_2" class="options__input" type="radio" value="2" name="option">
-													<label for="o_2" class="options__label"><span class="options__text">Укладка по ширине 45°</span></label>
+													<input hidden id="o_112" class="options__input options__input_methodLaminate" type="radio" value="1.05" name="option-methodLaminate">
+													<label for="o_112" class="options__label"><span class="options__text">Прямой
+															вразбежку</span></label>
 												</div>
 												<div class="options__item">
-													<input hidden id="o_3" class="options__input" type="radio" value="3" name="option">
-													<label for="o_3" class="options__label"><span class="options__text">Укладка по диагонали 90°</span></label>
+													<input hidden id="o_113" class="options__input options__input_methodLaminate" type="radio" value="1.1" name="option-methodLaminate">
+													<label for="o_113" class="options__label"><span class="options__text">Прямой
+															1/3</span></label>
 												</div>
 												<div class="options__item">
-													<input hidden id="o_4" class="options__input" type="radio" value="4" name="option">
-													<label for="o_4" class="options__label"><span class="options__text">Укладка по диагонали 135°</span></label>
+													<input hidden id="o_114" class="options__input options__input_methodLaminate" type="radio" value="1.12" name="option-methodLaminate">
+													<label for="o_114" class="options__label"><span class="options__text">Прямой
+															1/2</span></label>
+												</div>
+												<div class="options__item">
+													<input hidden id="o_115" class="options__input options__input_methodLaminate" type="radio" value="1.15" name="option-methodLaminate">
+													<label for="o_115" class="options__label"><span class="options__text">Диагональный</span></label>
+												</div>
+												<div class="options__item">
+													<input hidden id="o_116" class="options__input options__input_methodLaminate" type="radio" value="1.2" name="option-methodLaminate">
+													<label for="o_116" class="options__label"><span class="options__text">Ёлочкой</span></label>
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="tabs__item">
-										<h2 class="tabs__subtitle subtitle">
-											Минимальная длина обрезка
-										</h2>
-										<div class="tabs__form form-tabs">
-											<div class="form-tabs__line">
-												<label for="input8" class="form-tabs__label">Минимальное значение 250 мм</label>
-												<div class="form-tabs__wrapper">
-													<input id="input8" type="number" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">миллиметры (мм)</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tabs__item">
-										<h2 class="tabs__subtitle subtitle">
-											Отступ от стен
-										</h2>
-										<div class="tabs__form form-tabs">
-											<div class="form-tabs__line">
-												<label for="input9" class="form-tabs__label">Рекомендуемое значение 6 - 8 мм</label>
-												<div class="form-tabs__wrapper">
-													<input id="input9" type="number" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">миллиметры (мм)</span>
-												</div>
-											</div>
-										</div>
-									</div>
+									<button class="form-tabs__button calculator-laminate">Рассчитать стоимость</button>
 								</form>
-								<div class="tabs__body">
-									Содержимое второго таба 22
-								</div>
 							</div>
 						</div>
-						<button class="form-tabs__button">Рассчитать стоимость</button>
 						<div class="calculator__content">
 							<h2 class="calculator__subtitle subtitle">
 								Расчет количества гибсокартона для
@@ -246,39 +211,23 @@
 							</div>
 						</div>
 					</div>
-					<aside data-da=".calculator__body, 767.98, 2" class="calculator__result result">
-						<h4 class="result__header">Результаты</h4>
-						<div class="result__items">
-							<div class="result__item">
-								<div class="result__label">Количество листов (шт)</div>
-								<div class="result__value">120 шт</div>
+					<div class="pin-wrapper">
+						<aside data-da=".calculator__body, 767.98, 2" class="calculator__result result pin-block">
+							<div class="result__body">
+								<h4 class="result__header">Результаты</h4>
+								<div class="result__items">
+
+								</div>
 							</div>
-							<div class="result__item">
-								<div class="result__label">Стоимость площади</div>
-								<div class="result__value">12 000₽</div>
+							<div class="result__default">
+								<div class="result__image">
+									<img src="img/default-result/icon.svg" alt="icon">
+								</div>
+								<div class="result__topic">Заполните поля и нажмите «рассчитать»
+									что бы увидеть результаты.</div>
 							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь укладки</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь двери</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь ванны</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь экрана</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-						</div>
-						<div class="result__bottom">
-							<div class="result__label">Стоимость площади</div>
-							<div class="result__total-price">12 000₽</div>
-						</div>
-					</aside>
+						</aside>
+					</div>
 				</div>
 			</section>
 		</main>
@@ -341,7 +290,7 @@
 		</div>
 	</div>
 </div> -->
-	<script src="js/app.min.js?_v=20240131231752"></script>
+	<script src="js/app.min.js?_v=20240218164927"></script>
 </body>
 
 </html>

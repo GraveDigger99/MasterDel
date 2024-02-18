@@ -5,7 +5,7 @@
 	<title>Calculator-Plitka</title>
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="css/style.min.css?_v=20240131231752">
+	<link rel="stylesheet" href="css/style.min.css?_v=20240218164927">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -81,59 +81,37 @@
 								<button type="button" class="tabs__title">Плитка напольная</button>
 							</nav>
 							<div data-tabs-body class="tabs__content">
-								<form action="#" class="tabs__body">
+								<form action="#" class="tabs__body tabs__body_wall-tiles">
 									<div class="tabs__item">
 										<h2 class="tabs__subtitle subtitle">
-											Размер помещения
+											Размеры комнаты
 										</h2>
 										<div class="tabs__form form-tabs">
 											<div class="form-tabs__line form-tabs__line_error">
 												<label for="input1" class="form-tabs__label">Длина комнаты</label>
 												<div class="form-tabs__wrapper">
-													<input id="input1" type="number" class="form-tabs__input input" placeholder="0.0">
+													<input id="input1" type="string" class="form-tabs__input input input_roomLength input_number" placeholder="0">
 													<span class="form-tabs__measurement">метры (м)</span>
 												</div>
 											</div>
 											<div class="form-tabs__line">
 												<label for="input2" class="form-tabs__label">Ширина комнаты</label>
 												<div class="form-tabs__wrapper">
-													<input id="input2" type="number" class="form-tabs__input input" placeholder="0.0">
+													<input id="input2" type="string" class="form-tabs__input input input_roomWidth input_number" placeholder="0">
 													<span class="form-tabs__measurement">метры (м)</span>
 												</div>
 											</div>
 											<div class="form-tabs__line">
 												<label for="input3" class="form-tabs__label">Высота комнаты</label>
 												<div class="form-tabs__wrapper">
-													<input id="input3" type="number" class="form-tabs__input input" placeholder="0.0">
+													<input id="input3" type="string" class="form-tabs__input input input_roomHeight input_number" placeholder="0">
 													<span class="form-tabs__measurement">метры (м)</span>
 												</div>
 											</div>
 										</div>
 									</div>
 									<div class="tabs__item">
-										<h2 class="tabs__subtitle subtitle">Ванна</h2>
-										<div class="bathroom" id="bathroomWrapper">
-										</div>
-										<button id="bathroomWrapperButton" class="tabs__add">
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-												<path fill-rule="evenodd" clip-rule="evenodd" d="M8 2C8.55228 2 9 2.44772 9 3V7H13C13.5523 7 14 7.44772 14 8C14 8.55228 13.5523 9 13 9H9V13C9 13.5523 8.55228 14 8 14C7.44772 14 7 13.5523 7 13V9H3C2.44772 9 2 8.55228 2 8C2 7.44772 2.44772 7 3 7H7V3C7 2.44772 7.44772 2 8 2Z" fill="#1A1A1A" />
-											</svg>
-											<span>добавить ванну</span>
-										</button>
-									</div>
-									<div class="tabs__item">
-										<h2 class="tabs__subtitle subtitle">Окна</h2>
-										<div class="windows" id="windowsWrapper">
-										</div>
-										<button id="windowsWrapperButton" class="tabs__add tabs__add_window">
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-												<path fill-rule="evenodd" clip-rule="evenodd" d="M8 2C8.55228 2 9 2.44772 9 3V7H13C13.5523 7 14 7.44772 14 8C14 8.55228 13.5523 9 13 9H9V13C9 13.5523 8.55228 14 8 14C7.44772 14 7 13.5523 7 13V9H3C2.44772 9 2 8.55228 2 8C2 7.44772 2.44772 7 3 7H7V3C7 2.44772 7.44772 2 8 2Z" fill="#1A1A1A" />
-											</svg>
-											<span>добавить окно</span>
-										</button>
-									</div>
-									<div class="tabs__item">
-										<h2 class="tabs__subtitle subtitle">Двери</h2>
+										<h2 class="tabs__subtitle subtitle">Размеры дверей</h2>
 										<div class="doors" id="doorsWrapper">
 										</div>
 										<button id="doorsWrapperButton" class="tabs__add">
@@ -144,41 +122,180 @@
 										</button>
 									</div>
 									<div class="tabs__item">
+										<h2 class="tabs__subtitle subtitle">Размеры окон</h2>
+										<div class="windows" id="windowsWrapper">
+										</div>
+										<button id="windowsWrapperButton" class="tabs__add tabs__add_window">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+												<path fill-rule="evenodd" clip-rule="evenodd" d="M8 2C8.55228 2 9 2.44772 9 3V7H13C13.5523 7 14 7.44772 14 8C14 8.55228 13.5523 9 13 9H9V13C9 13.5523 8.55228 14 8 14C7.44772 14 7 13.5523 7 13V9H3C2.44772 9 2 8.55228 2 8C2 7.44772 2.44772 7 3 7H7V3C7 2.44772 7.44772 2 8 2Z" fill="#1A1A1A" />
+											</svg>
+											<span>добавить окно</span>
+										</button>
+									</div>
+									<div class="tabs__item">
+										<h2 class="tabs__subtitle subtitle">Размеры ванны</h2>
+										<div class="tabs__inner">
+											<div class="tabs__form form-tabs">
+												<div class="form-tabs__line form-tabs__line_options">
+													<label class="form-tabs__label">Ванна прилегает к стене с трех сторон?</label>
+													<div class="options options_row">
+														<div class="options__item">
+															<input hidden id="o_110" class="options__input options__input_bathType" checked type="radio" value="yes" name="option-input_bathType">
+															<label for="o_110" class="options__label"><span class="options__text">Да</span></label>
+														</div>
+														<div class="options__item">
+															<input hidden id="o_112" class="options__input options__input_bathType" type="radio" value="no" name="option-input_bathType">
+															<label for="o_112" class="options__label"><span class="options__text">Нет</span></label>
+														</div>
+													</div>
+												</div>
+												<div class="form-tabs__line">
+													<label class="form-tabs__label">Длина ванны</label>
+													<div class="form-tabs__wrapper">
+														<input type="string" class="form-tabs__input input input_bathWidth input_number" placeholder="0">
+														<span class="form-tabs__measurement">метры (м)</span>
+													</div>
+												</div>
+												<div class="form-tabs__line">
+													<label class="form-tabs__label">Ширина ванны</label>
+													<div class="form-tabs__wrapper">
+														<input type="string" class="form-tabs__input input input_bathHeight input_number" placeholder="0">
+														<span class="form-tabs__measurement">метры (м)</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tabs__item">
 										<h2 class="tabs__subtitle subtitle">
-											Плитка
+											Размеры плитки
 										</h2>
 										<div class="tabs__form form-tabs">
 											<div class="form-tabs__line">
 												<label for="input6" class="form-tabs__label">Длина плитки</label>
 												<div class="form-tabs__wrapper">
-													<input id="input6" type="number" class="form-tabs__input input" placeholder="0.0">
+													<input id="input6" type="string" class="form-tabs__input input input_tileLength input_number" placeholder="0">
 													<span class="form-tabs__measurement">метры (м)</span>
 												</div>
 											</div>
 											<div class="form-tabs__line">
 												<label for="input7" class="form-tabs__label">Ширина плитки</label>
 												<div class="form-tabs__wrapper">
-													<input id="input7" type="number" class="form-tabs__input input" placeholder="0.0">
+													<input id="input7" type="string" class="form-tabs__input input input_tileWidth input_number" placeholder="0">
 													<span class="form-tabs__measurement">метры (м)</span>
 												</div>
 											</div>
 											<div class="form-tabs__line">
-												<label for="input8" class="form-tabs__label">Стоимость плитки</label>
+												<label for="input8" class="form-tabs__label">Ширина шва</label>
 												<div class="form-tabs__wrapper">
-													<input id="input8" type="number" class="form-tabs__input input" placeholder="0.0">
-													<span class="form-tabs__measurement">м2/₽</span>
+													<input id="input8" type="string" class="form-tabs__input input input_seamWidth input_number" placeholder="0">
+													<span class="form-tabs__measurement">миллиметры (мм)</span>
 												</div>
 											</div>
 										</div>
 									</div>
-
+									<div class="tabs__item">
+										<div class="tabs__options">
+											<h2 class="tabs__subtitle subtitle">
+												Способ раскладки плитки
+											</h2>
+											<div class="options">
+												<div class="options__item">
+													<input hidden id="o_221" class="options__input options__input_methodTiles" checked type="radio" value="1.05" name="option-input_methodTiles">
+													<label for="o_221" class="options__label"><span class="options__text">Прямой</span></label>
+												</div>
+												<div class="options__item">
+													<input hidden id="o_445" class="options__input options__input_methodTiles" type="radio" value="1.1" name="option-input_methodTiles">
+													<label for="o_445" class="options__label"><span class="options__text">Со
+															смещением</span></label>
+												</div>
+												<div class="options__item">
+													<input hidden id="o_113" class="options__input options__input_methodTiles" type="radio" value="1.15" name="option-input_methodTiles">
+													<label for="o_113" class="options__label"><span class="options__text">Диагональный</span></label>
+												</div>
+											</div>
+										</div>
+									</div>
+									<button class="form-tabs__button calculate-tiles">Рассчитать стоимость</button>
 								</form>
 								<div class="tabs__body">
-									Содержимое второго таба 22
+									<form action="#" class="tabs__body tabs__body_floor-tiles">
+										<div class="tabs__item">
+											<h2 class="tabs__subtitle subtitle">
+												Размеры комнаты
+											</h2>
+											<div class="tabs__form form-tabs">
+												<div class="form-tabs__line">
+													<label for="input1" class="form-tabs__label">Длина помещения</label>
+													<div class="form-tabs__wrapper">
+														<input id="input1" type="string" class="form-tabs__input input input_roomLength1 input_number" placeholder="0">
+														<span class="form-tabs__measurement">метры (м)</span>
+													</div>
+												</div>
+												<div class="form-tabs__line">
+													<label for="input2" class="form-tabs__label">Ширина помещения</label>
+													<div class="form-tabs__wrapper">
+														<input id="input2" type="string" class="form-tabs__input input input_roomWidth1 input_number" placeholder="0">
+														<span class="form-tabs__measurement">метры (м)</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tabs__item">
+											<h2 class="tabs__subtitle subtitle">
+												Размеры плитки
+											</h2>
+											<div class="tabs__form form-tabs">
+												<div class="form-tabs__line">
+													<label for="input6" class="form-tabs__label">Длина плитки</label>
+													<div class="form-tabs__wrapper">
+														<input id="input6" type="string" class="form-tabs__input input input_tileLength1 input_number" placeholder="0">
+														<span class="form-tabs__measurement">метры (м)</span>
+													</div>
+												</div>
+												<div class="form-tabs__line">
+													<label for="input7" class="form-tabs__label">Ширина плитки</label>
+													<div class="form-tabs__wrapper">
+														<input id="input7" type="string" class="form-tabs__input input input_tileWidth1 input_number" placeholder="0">
+														<span class="form-tabs__measurement">метры (м)</span>
+													</div>
+												</div>
+												<div class="form-tabs__line">
+													<label for="input8" class="form-tabs__label">Ширина шва</label>
+													<div class="form-tabs__wrapper">
+														<input id="input8" type="string" class="form-tabs__input input input_seamWidth1 input_number" placeholder="0">
+														<span class="form-tabs__measurement">миллиметры (мм)</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tabs__item">
+											<div class="tabs__options">
+												<h2 class="tabs__subtitle subtitle">
+													Способ раскладки плитки
+												</h2>
+												<div class="options">
+													<div class="options__item">
+														<input hidden id="o_400" class="options__input options__input_methodTiles1" checked type="radio" value="1.05" name="option-input_methodTiles1">
+														<label for="o_400" class="options__label"><span class="options__text">Прямой</span></label>
+													</div>
+													<div class="options__item">
+														<input hidden id="o_500" class="options__input options__input_methodTiles1" type="radio" value="1.1" name="option-input_methodTiles1">
+														<label for="o_500" class="options__label"><span class="options__text">Со
+																смещением</span></label>
+													</div>
+													<div class="options__item">
+														<input hidden id="o_300" class="options__input options__input_methodTiles1" type="radio" value="1.15" name="option-input_methodTiles1">
+														<label for="o_300" class="options__label"><span class="options__text">Диагональный</span></label>
+													</div>
+												</div>
+											</div>
+										</div>
+										<button class="form-tabs__button calculate-floor-tiles">Рассчитать стоимость</button>
+									</form>
 								</div>
 							</div>
 						</div>
-						<button class="form-tabs__button">Рассчитать стоимость</button>
 						<div class="calculator__content">
 							<h2 class="calculator__subtitle subtitle">
 								Расчет количества гибсокартона для
@@ -219,39 +336,23 @@
 							</div>
 						</div>
 					</div>
-					<aside data-da=".calculator__body, 767.98, 2" class="calculator__result result">
-						<h4 class="result__header">Результаты</h4>
-						<div class="result__items">
-							<div class="result__item">
-								<div class="result__label">Количество листов (шт)</div>
-								<div class="result__value">120 шт</div>
+					<div class="pin-wrapper">
+						<aside data-da=".calculator__body, 767.98, 2" class="calculator__result result pin-block">
+							<div class="result__body">
+								<h4 class="result__header">Результаты</h4>
+								<div class="result__items">
+
+								</div>
 							</div>
-							<div class="result__item">
-								<div class="result__label">Стоимость площади</div>
-								<div class="result__value">12 000₽</div>
+							<div class="result__default">
+								<div class="result__image">
+									<img src="img/default-result/icon.svg" alt="icon">
+								</div>
+								<div class="result__topic">Заполните поля и нажмите «рассчитать»
+									что бы увидеть результаты.</div>
 							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь укладки</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь двери</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь ванны</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь экрана</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-						</div>
-						<div class="result__bottom">
-							<div class="result__label">Стоимость площади</div>
-							<div class="result__total-price">12 000₽</div>
-						</div>
-					</aside>
+						</aside>
+					</div>
 				</div>
 			</section>
 		</main>
@@ -314,7 +415,7 @@
 		</div>
 	</div>
 </div> -->
-	<script src="js/app.min.js?_v=20240131231752"></script>
+	<script src="js/app.min.js?_v=20240218164927"></script>
 </body>
 
 </html>

@@ -5,7 +5,7 @@
 	<title>calculator-Shtukaturka</title>
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="css/style.min.css?_v=20240131231752">
+	<link rel="stylesheet" href="css/style.min.css?_v=20240218164927">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -78,59 +78,65 @@
 						<div data-tabs class="tabs">
 							<nav data-tabs-titles class="tabs__navigation">
 								<button type="button" class="tabs__title _tab-active">Длина и ширина</button>
-								<button type="button" class="tabs__title">Площадь под штукатурку</button>
 							</nav>
 							<div data-tabs-body class="tabs__content">
-								<div class="tabs__body">
+								<div class="tabs__body tabs__body_plaster">
 									<h2 class="tabs__subtitle subtitle">
 										Размер помещения
 									</h2>
-									<form action="#" class="tabs__form form-tabs form-tabs_wide">
-										<div class="form-tabs__line">
-											<label for="input1" class="form-tabs__label">Ширина поверхности</label>
-											<div class="form-tabs__wrapper">
-												<input id="input1" type="number" class="form-tabs__input input" placeholder="0.0">
-												<span class="form-tabs__measurement">метры (м)</span>
+									<form action="#" class="tabs__form form-tabs">
+										<div class="tabs__item">
+											<div class="form-tabs__line">
+												<label for="input1" class="form-tabs__label">Длина стены</label>
+												<div class="form-tabs__wrapper">
+													<input id="input1" type="number" class="form-tabs__input input input_lengthWall input_number" placeholder="0">
+													<span class="form-tabs__measurement">метры (м)</span>
+												</div>
+											</div>
+											<div class="form-tabs__line">
+												<label for="input2" class="form-tabs__label">Высота стены</label>
+												<div class="form-tabs__wrapper">
+													<input id="input2" type="number" class="form-tabs__input input input_heightWall input_number" placeholder="0">
+													<span class="form-tabs__measurement">метры (м)</span>
+												</div>
+											</div>
+											<div class="form-tabs__line">
+												<label for="input3" class="form-tabs__label">Толщина слоя</label>
+												<div class="form-tabs__wrapper">
+													<input id="input3" type="number" class="form-tabs__input input input_thicknessLayer input_number" placeholder="0">
+													<span class="form-tabs__measurement">миллиметры (мм)</span>
+												</div>
+											</div>
+											<div class="form-tabs__line">
+												<label for="input4" class="form-tabs__label">Масса мешка штукатурки</label>
+												<div class="form-tabs__wrapper">
+													<input id="input4" type="number" class="form-tabs__input input input_bagMass input_number" placeholder="0">
+													<span class="form-tabs__measurement">килограммы (кг)</span>
+												</div>
 											</div>
 										</div>
-										<div class="form-tabs__line">
-											<label for="input2" class="form-tabs__label">Длина поверхности</label>
-											<div class="form-tabs__wrapper">
-												<input id="input2" type="number" class="form-tabs__input input" placeholder="0.0">
-												<span class="form-tabs__measurement">метры (м)</span>
+										<div class="tabs__item">
+											<div class="tabs__options">
+												<h2 class="tabs__subtitle subtitle">
+													Тип штукатурки
+												</h2>
+												<div class="options">
+													<div class="options__item">
+														<input hidden id="o_110" class="options__input options__input_plasterType" checked type="radio" value="9" name="option-plasterType">
+														<label for="o_110" class="options__label"><span class="options__text">Гипсовая</span></label>
+													</div>
+													<div class="options__item">
+														<input hidden id="o_112" class="options__input options__input_plasterType" type="radio" value="17" name="option-plasterType">
+														<label for="o_112" class="options__label"><span class="options__text">Цементная</span></label>
+													</div>
+												</div>
 											</div>
 										</div>
-										<div class="form-tabs__line">
-											<h2 class="form-tabs__label">Длина поверхности</h2>
-											<select data-speed="500" name="form[]" class="form">
-												<option value="1" selected>Штукатурка Knauf Rotband</option>
-												<option value="2">Пункт №2</option>
-												<option value="3">Пункт №3</option>
-												<option value="4">Пункт №4</option>
-											</select>
-										</div>
-										<div class="form-tabs__line">
-											<label for="input3" class="form-tabs__label">Толщина слоя</label>
-											<div class="form-tabs__wrapper">
-												<input id="input3" type="number" class="form-tabs__input input" placeholder="0.0">
-												<span class="form-tabs__measurement">миллиметры (мм)</span>
-											</div>
-										</div>
-										<div class="form-tabs__line">
-											<label for="input4" class="form-tabs__label">Цена мешка</label>
-											<div class="form-tabs__wrapper">
-												<input id="input4" type="number" class="form-tabs__input input" placeholder="0.0">
-												<span class="form-tabs__measurement">₽</span>
-											</div>
-										</div>
+										<button class="form-tabs__button calculator-plaster">Рассчитать стоимость</button>
 									</form>
-								</div>
-								<div class="tabs__body">
-									Содержимое второго таба
 								</div>
 							</div>
 						</div>
-						<button class="form-tabs__button">Рассчитать стоимость</button>
 						<div class="calculator__content">
 							<h2 class="calculator__subtitle subtitle">
 								Расчет количества гибсокартона для
@@ -171,39 +177,23 @@
 							</div>
 						</div>
 					</div>
-					<aside data-da=".calculator__body, 767.98, 2" class="calculator__result result">
-						<h4 class="result__header">Результаты</h4>
-						<div class="result__items">
-							<div class="result__item">
-								<div class="result__label">Количество листов (шт)</div>
-								<div class="result__value">120 шт</div>
+					<div class="pin-wrapper">
+						<aside data-da=".calculator__body, 767.98, 2" class="calculator__result result pin-block">
+							<div class="result__body">
+								<h4 class="result__header">Результаты</h4>
+								<div class="result__items">
+
+								</div>
 							</div>
-							<div class="result__item">
-								<div class="result__label">Стоимость площади</div>
-								<div class="result__value">12 000₽</div>
+							<div class="result__default">
+								<div class="result__image">
+									<img src="img/default-result/icon.svg" alt="icon">
+								</div>
+								<div class="result__topic">Заполните поля и нажмите «рассчитать»
+									что бы увидеть результаты.</div>
 							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь укладки</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь двери</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь ванны</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-							<div class="result__item">
-								<div class="result__label">Площадь экрана</div>
-								<div class="result__value">43.2 м2</div>
-							</div>
-						</div>
-						<div class="result__bottom">
-							<div class="result__label">Стоимость площади</div>
-							<div class="result__total-price">12 000₽</div>
-						</div>
-					</aside>
+						</aside>
+					</div>
 				</div>
 			</section>
 		</main>
@@ -266,7 +256,7 @@
 		</div>
 	</div>
 </div> -->
-	<script src="js/app.min.js?_v=20240131231752"></script>
+	<script src="js/app.min.js?_v=20240218164927"></script>
 </body>
 
 </html>
