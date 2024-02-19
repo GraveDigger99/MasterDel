@@ -490,11 +490,11 @@
     }
     const da = new DynamicAdapt("max");
     da.init();
+    let isDoorsWrapperOpen = false;
+    let isWindowsWrapperOpen = false;
     const blockCounters = {};
     const doorsWrapperButton = document.getElementById("doorsWrapperButton");
     const windowsWrapperButton = document.getElementById("windowsWrapperButton");
-    addBlock("windows", "windowsWrapper", false);
-    addBlock("doors", "doorsWrapper", false);
     if (windowsWrapperButton) windowsWrapperButton.addEventListener("click", (event => {
         event.preventDefault();
         addBlock("windows", "windowsWrapper", true);
@@ -504,8 +504,10 @@
         console.log("Clicked Doors Button");
         addBlock("doors", "doorsWrapper", true);
     }));
-    function addBlock(blockType, wrapperId, isOpen = false) {
+    function addBlock(blockType, wrapperId, isOpen) {
         if (!blockCounters[wrapperId]) blockCounters[wrapperId] = {};
+        if (blockType === "doors" && isOpen) isDoorsWrapperOpen = true;
+        if (blockType === "windows" && isOpen) isWindowsWrapperOpen = true;
         blockCounters[wrapperId][blockType] = (blockCounters[wrapperId][blockType] || 0) + 1;
         const blockCounter = getBlockCounter(blockType, wrapperId);
         const blockId = `${blockType}Block_${blockCounter}`;
@@ -881,10 +883,15 @@
         function calculateDerivedValues(inputValues) {
             let areaOfWindowsDoors = 0;
             const windowTotal = calculateTotalAreaForWindows();
+            console.log(windowTotal);
             const doorTotal = calculateTotalAreaForDoors();
+            console.log(doorTotal);
             areaOfWindowsDoors = Number(doorTotal + windowTotal).toFixed(2);
+            console.log(areaOfWindowsDoors);
             function calculateTotalAreaForDoors() {
-                const doorsInputs = Array.from(document.querySelectorAll(`#doorsWrapper input`));
+                if (!isDoorsWrapperOpen) return 0;
+                const doorsInputs = Array.from(document.querySelectorAll("#doorsWrapper .input_number"));
+                if (doorsInputs.length === 0) return 0;
                 const totalArea = doorsInputs.reduce(((accumulator, input) => {
                     const value = parseFloat(input.value.trim());
                     if (!isNaN(value)) return accumulator * value;
@@ -893,8 +900,10 @@
                 return totalArea;
             }
             function calculateTotalAreaForWindows() {
-                const doorsInputs = Array.from(document.querySelectorAll(`#windowsWrapper input`));
-                const totalArea = doorsInputs.reduce(((accumulator, input) => {
+                if (!isWindowsWrapperOpen) return 0;
+                const windowsInputs = Array.from(document.querySelectorAll(`#windowsWrapper input`));
+                if (windowsInputs.length === 0) return 0;
+                const totalArea = windowsInputs.reduce(((accumulator, input) => {
                     const value = parseFloat(input.value.trim());
                     if (!isNaN(value)) return accumulator * value;
                     return 0;
@@ -1025,7 +1034,7 @@
         function calculateDerivedValues(inputValues) {
             const roomArea = inputValues.roomLength1 * inputValues.roomWidth1;
             const panelAera = inputValues.lengthOfPanel1 * inputValues.widthOfPanel1;
-            const withoutLeftOvers = roomArea / panelAera;
+            const withoutLeftOvers = Number(roomArea / panelAera).toFixed(2);
             let methodLaminateFactor;
             switch (inputValues.selectedMethodLaminateValue) {
               case 1:
@@ -1358,8 +1367,12 @@
             let doorTotal = 0;
             const doorTotalTest = calculateTotalAreaForDoors();
             doorTotal = doorTotalTest;
+            console.log(doorTotal);
+            console.log(windowTotal);
             function calculateTotalAreaForDoors() {
-                const doorsInputs = Array.from(document.querySelectorAll(`#doorsWrapper input`));
+                if (!isDoorsWrapperOpen) return 0;
+                const doorsInputs = Array.from(document.querySelectorAll("#doorsWrapper .input_number"));
+                if (doorsInputs.length === 0) return 0;
                 const totalArea = doorsInputs.reduce(((accumulator, input) => {
                     const value = parseFloat(input.value.trim());
                     if (!isNaN(value)) return accumulator * value;
@@ -1368,8 +1381,10 @@
                 return totalArea;
             }
             function calculateTotalAreaForWindows() {
-                const doorsInputs = Array.from(document.querySelectorAll(`#windowsWrapper input`));
-                const totalArea = doorsInputs.reduce(((accumulator, input) => {
+                if (!isWindowsWrapperOpen) return 0;
+                const windowsInputs = Array.from(document.querySelectorAll(`#windowsWrapper input`));
+                if (windowsInputs.length === 0) return 0;
+                const totalArea = windowsInputs.reduce(((accumulator, input) => {
                     const value = parseFloat(input.value.trim());
                     if (!isNaN(value)) return accumulator * value;
                     return 0;
@@ -1405,16 +1420,29 @@
             e.preventDefault();
             calculate();
         }));
-        const numberInputFields = document.querySelectorAll(".input_number");
-        numberInputFields.forEach((inputField => {
-            inputField.addEventListener("input", (() => {
+        const formTabsWrapper = document.getElementById("doorsWrapper");
+        formTabsWrapper.addEventListener("input", (event => {
+            const inputField = event.target;
+            if (inputField.classList.contains("input_number")) {
                 const formWrapper = inputField.closest(".form-tabs__wrapper");
                 const inputValue = inputField.value;
                 const sanitizedValue = inputValue.replace(/,/g, ".");
                 const sanitizedInput = sanitizedValue.replace(/[^\d.,]/g, "");
                 inputField.value = sanitizedInput;
                 formWrapper.classList.remove("error");
-            }));
+            }
+        }));
+        const windowTabsWrapper = document.getElementById("windowsWrapper");
+        windowTabsWrapper.addEventListener("input", (event => {
+            const inputField = event.target;
+            if (inputField.classList.contains("input_number")) {
+                const formWrapper = inputField.closest(".form-tabs__wrapper");
+                const inputValue = inputField.value;
+                const sanitizedValue = inputValue.replace(/,/g, ".");
+                const sanitizedInput = sanitizedValue.replace(/[^\d.,]/g, "");
+                inputField.value = sanitizedInput;
+                formWrapper.classList.remove("error");
+            }
         }));
         function calculate() {
             const inputValues = getInputValues();

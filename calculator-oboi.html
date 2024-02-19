@@ -5,7 +5,7 @@
 	<title>Calculator-Oboi</title>
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="css/style.min.css?_v=20240218164927">
+	<link rel="stylesheet" href="css/style.min.css?_v=20240219192752">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -75,11 +75,8 @@
 			<section class="calculator">
 				<div class="calculator__container">
 					<div class="calculator__body">
-						<div data-tabs class="tabs">
-							<nav data-tabs-titles class="tabs__navigation">
-								<button type="button" class="tabs__title _tab-active">Плитка настенная</button>
-							</nav>
-							<div data-tabs-body class="tabs__content">
+						<div class="tabs">
+							<div class="tabs__content">
 								<form action="#" class="tabs__body tabs__body_wall-tiles">
 									<div class="tabs__item">
 										<h2 class="tabs__subtitle subtitle">
@@ -153,13 +150,13 @@
 											<div class="form-tabs__line">
 												<label for="input10" class="form-tabs__label">Раппорт (соответствие узора)</label>
 												<div class="form-tabs__wrapper">
-													<input id="input10" type="string" class="form-tabs__input input input_rapport input_number" placeholder="0">
+													<input id="input10" type="string" value="0" class="form-tabs__input input input_rapport input_number" placeholder="0">
 												</div>
 											</div>
 											<div class="form-tabs__line">
 												<label for="input11" class="form-tabs__label">Запас на стык</label>
 												<div class="form-tabs__wrapper">
-													<input id="input11" type="string" class="form-tabs__input input input_margin input_number" placeholder="0">
+													<input id="input11" type="string" value="0" class="form-tabs__input input input_margin input_number" placeholder="0">
 												</div>
 											</div>
 											<div class="form-tabs__line">
@@ -294,7 +291,7 @@
 		</div>
 	</div>
 </div> -->
-	<script src="js/app.min.js?_v=20240218164927"></script>
+	<script src="js/app.min.js?_v=20240219192752"></script>
 </body>
 
 </html>
