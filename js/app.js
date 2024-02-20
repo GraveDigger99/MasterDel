@@ -883,11 +883,8 @@
         function calculateDerivedValues(inputValues) {
             let areaOfWindowsDoors = 0;
             const windowTotal = calculateTotalAreaForWindows();
-            console.log(windowTotal);
             const doorTotal = calculateTotalAreaForDoors();
-            console.log(doorTotal);
             areaOfWindowsDoors = Number(doorTotal + windowTotal).toFixed(2);
-            console.log(areaOfWindowsDoors);
             function calculateTotalAreaForDoors() {
                 if (!isDoorsWrapperOpen) return 0;
                 const doorsInputs = Array.from(document.querySelectorAll("#doorsWrapper .input_number"));
@@ -910,14 +907,16 @@
                 }), 1);
                 return totalArea;
             }
-            inputValues.walpaperRollLength1, inputValues.walpaperRollWidth1;
-            inputValues.doorHeight1, inputValues.rapport1, inputValues.margin1;
+            const realStripMargin = inputValues.roomHeight1 - inputValues.rapport1 * inputValues.margin1 / 100;
+            console.log(realStripMargin);
             const roomPerimeter = (inputValues.roomLength1 + inputValues.roomWidth1) * 2;
-            inputValues.roomLength1, inputValues.roomWidth1;
             const coverageArea = roomPerimeter * inputValues.roomHeight1 - areaOfWindowsDoors;
-            const realStripMargin = inputValues.roomHeight1 - inputValues.rapport1 * inputValues.margin1;
-            const numberOfStripsOneRoll = Math.floor(inputValues.walpaperRollLength1 / realStripMargin);
-            const requiredNumberOfStripes = Math.ceil(coverageArea / (inputValues.walpaperRollWidth1 * realStripMargin));
+            console.log(coverageArea);
+            const requiredNumberOfStripes = Math.ceil(coverageArea / (inputValues.walpaperRollWidth1 * realStripMargin / 100));
+            console.log(requiredNumberOfStripes);
+            let numberOfStripsOneRoll;
+            if (Math.floor(inputValues.walpaperRollLength1 / realStripMargin) === 0) numberOfStripsOneRoll = 1; else numberOfStripsOneRoll = inputValues.walpaperRollLength1 / realStripMargin;
+            console.log(numberOfStripsOneRoll);
             const requiredNumberOfWalpaperRolls = Math.ceil(requiredNumberOfStripes / numberOfStripsOneRoll);
             const totalCostOfRolls = requiredNumberOfWalpaperRolls * inputValues.pricePerRoll1;
             const totalAreaOfAllWalls = (inputValues.roomLength1 + inputValues.roomWidth1) * 2 * inputValues.roomHeight1;
