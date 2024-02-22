@@ -1420,7 +1420,7 @@
             calculate();
         }));
         const formTabsWrapper = document.getElementById("doorsWrapper");
-        formTabsWrapper.addEventListener("input", (event => {
+        if (formTabsWrapper) formTabsWrapper.addEventListener("input", (event => {
             const inputField = event.target;
             if (inputField.classList.contains("input_number")) {
                 const formWrapper = inputField.closest(".form-tabs__wrapper");
@@ -1432,7 +1432,7 @@
             }
         }));
         const windowTabsWrapper = document.getElementById("windowsWrapper");
-        windowTabsWrapper.addEventListener("input", (event => {
+        if (windowTabsWrapper) windowTabsWrapper.addEventListener("input", (event => {
             const inputField = event.target;
             if (inputField.classList.contains("input_number")) {
                 const formWrapper = inputField.closest(".form-tabs__wrapper");
